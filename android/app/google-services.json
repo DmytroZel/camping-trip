@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "443653754124",
+    "firebase_url": "https://camp-app-41299-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "camp-app-41299",
+    "storage_bucket": "camp-app-41299.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:443653754124:android:28977832a2ea39eb388d29",
+        "android_client_info": {
+          "package_name": "com.example.camp_trip"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "443653754124-mmg8dull14a51epaphudj4nj0k6k2ijb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBzVw3HxmkWlddoiaLsjBn3TVs-hy6TEZ8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "443653754124-mmg8dull14a51epaphudj4nj0k6k2ijb.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "443653754124-dlb3vbkobe018chlb5cl9v55u3nkgi2p.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.campTrip"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
