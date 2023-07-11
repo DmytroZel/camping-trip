@@ -104,18 +104,19 @@ class _LoginPageState extends BaseState<LoginPage> {
   }
 
   _showRegisterMassage(){
+    final vm = Provider.of<LoginVm>(context, listen: false);
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Register'),
         content: const Text('Register success'),
         actions: [
-          TextButton(
-            onPressed: () {
-              onRegisterTap();
-            },
-            child: const Text('OK'),
+          TextField(
+            onChanged: vm.onUserNameChanged,
           ),
+          MaterialButton(onPressed: (){
+            onRegisterTap();
+          },child: const Text("OK"),)
         ],
       ),
     );

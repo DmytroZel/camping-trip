@@ -1,5 +1,6 @@
 import 'package:camp_trip/common/base/base_state.dart';
 import 'package:camp_trip/common/extension/stream_subscription_extensions.dart';
+import 'package:camp_trip/feature/main/widet/header.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -30,6 +31,7 @@ class _MainPageState extends BaseState<MainPage> {
         child: SafeArea(
           child: Column(
             children: [
+              Header(userName: vm.getUserName(),),
               const Center(
                 child: Text(
                   "Camping trip",

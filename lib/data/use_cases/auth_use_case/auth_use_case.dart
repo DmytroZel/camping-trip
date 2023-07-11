@@ -7,7 +7,7 @@ abstract class AuthUseCase {
 
   String getId();
 
-  Future<String?> registerWithEmailAndPassword(String email, String password);
+  Future<String?> registerWithEmailAndPassword(String email, String password, String userName);
 
   Future<String?> signInWithEmailAndPassword(String email, String password);
 

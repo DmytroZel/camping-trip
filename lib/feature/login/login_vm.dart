@@ -1,15 +1,16 @@
 import 'dart:async';
 
-import 'package:camp_trip/data/usecases/auth_use_case.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../common/base/base_vm.dart';
+import '../../data/use_cases/auth_use_case/auth_use_case.dart';
 
 @injectable
 class LoginVm extends BaseVM {
   final AuthUseCase _authUseCase;
   String? _email;
   String? _password;
+  String? userName;
   StreamController<void> goToMain = StreamController<void>();
   StreamController<void> showRegisterMassage = StreamController<void>();
   StreamController<String> showError = StreamController<String>();
@@ -55,7 +56,7 @@ class LoginVm extends BaseVM {
         _password != null &&
         _email!.isNotEmpty &&
         _password!.isNotEmpty) {
-      _authUseCase.registerWithEmailAndPassword(_email!, _password!);
+      _authUseCase.registerWithEmailAndPassword(_email!, _password!, userName!);
       goToMain.sink.add(null);
     } else {
       showError.sink.add("Please enter email and password");
@@ -69,5 +70,9 @@ class LoginVm extends BaseVM {
 
   onPasswordChanged(String password) {
     _password = password;
+  }
+
+  onUserNameChanged(String userName) {
+    this.userName = userName;
   }
 }

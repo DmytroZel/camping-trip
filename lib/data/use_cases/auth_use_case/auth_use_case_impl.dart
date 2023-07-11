@@ -1,7 +1,7 @@
-import 'package:camp_trip/data/usecases/auth_use_case.dart';
 import 'package:injectable/injectable.dart';
 
-import '../repository/auth_repository/auth_repo.dart';
+import '../../repository/auth_repository/auth_repo.dart';
+import 'auth_use_case.dart';
 
 @Injectable(as: AuthUseCase)
 class AuthUseCaseImpl extends AuthUseCase {
@@ -30,8 +30,8 @@ class AuthUseCaseImpl extends AuthUseCase {
   }
 
   @override
-  Future<String?> registerWithEmailAndPassword(String email, String password) {
-    return authRepo.registerWithEmailAndPassword(email, password);
+  Future<String?> registerWithEmailAndPassword(String email, String password, String userName) {
+    return authRepo.registerWithEmailAndPassword(email, password, userName);
 
   }
 

@@ -1,6 +1,8 @@
+import 'package:camp_trip/domain/model/api_model/firebase_user/firebase_user_model.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../api/auth_api/auth_api.dart';
+import '../../api/user_api/firebase_user_api.dart';
 import '../../shared_preferences/shared_preferences_module.dart';
 import 'auth_repo.dart';
 
@@ -8,8 +10,9 @@ import 'auth_repo.dart';
 class AuthRepoImpl implements AuthRepo {
   final AuthApi firebaseAuthModule;
   final SharedPreferencesModule sharedPreferencesModule;
+  final FirebaseUserAPi firebaseUserAPi;
 
-  AuthRepoImpl(
+  AuthRepoImpl(this.firebaseUserAPi,
       {required this.firebaseAuthModule,
         required this.sharedPreferencesModule});
 
@@ -50,9 +53,12 @@ class AuthRepoImpl implements AuthRepo {
   }
 
   @override
-  Future<String?> registerWithEmailAndPassword(String email, String password) async {
+  Future<String?> registerWithEmailAndPassword(String email, String password, String userName) async {
     final uid = await firebaseAuthModule.registerWithEmailAndPassword(email, password);
+    if(uid == null) return null;
     await setCurrentProfileId(uid);
+    final user = FirebaseUserModel(id: uid, userName: userName, email: email);
+    await firebaseUserAPi.addOrUpdate(user);
     return uid;
   }
 

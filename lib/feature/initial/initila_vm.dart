@@ -1,9 +1,8 @@
 import 'dart:async';
-
-import 'package:camp_trip/data/usecases/auth_use_case.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../common/base/base_vm.dart';
+import '../../data/use_cases/auth_use_case/auth_use_case.dart';
 
 @injectable
 class InitialVm extends BaseVM{

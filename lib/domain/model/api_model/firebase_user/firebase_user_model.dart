@@ -1,26 +1,33 @@
-import 'package:json_annotation/json_annotation.dart';
-
-import '../../repository/user_model.dart';
+import '../../repository/user_model_repo.dart';
 
 
-part 'firebase_user_model.g.dart';
 
-@JsonSerializable(explicitToJson: true)
 class FirebaseUserModel {
   String id;
-  String phone;
+  String userName;
+  String email;
 
   FirebaseUserModel({
     required this.id,
-    required this.phone,
+    required this.userName,
+    required this.email,
   });
 
-  factory FirebaseUserModel.fromJson(Map<String, dynamic> json) =>
-      _$FirebaseUserModelFromJson(json);
 
-  Map<String, dynamic> toJson() => _$FirebaseUserModelToJson(this);
+  FirebaseUserModel.fromJson(Map<String, dynamic> json)
+      : id = json['id'],
+        userName = json['userName'],
+        email = json['email'];
 
-  FirebaseUserModel.fromModel(UserModel r)
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'userName': userName,
+        'email': email,
+      };
+
+
+  FirebaseUserModel.fromRepo(UserModelRepo r)
       : id = r.id,
-        phone = r.phone;
+        userName = r.userName,
+    email = r.email;
 }
