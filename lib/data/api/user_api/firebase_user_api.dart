@@ -4,5 +4,6 @@ abstract class FirebaseUserAPi {
   Future<void> addOrUpdate(FirebaseUserModel userModel);
   Future<void> deleteUser(String userId);
   Future<FirebaseUserModel> getUser(String userId);
+  Stream<List<FirebaseUserModel>> getUsers();
   Stream<FirebaseUserModel> getMyProfileStream(String userId);
 }

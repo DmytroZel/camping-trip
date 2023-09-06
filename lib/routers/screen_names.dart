@@ -7,4 +7,5 @@ class ScreenNames {
   static const String ingredients = '/ingredients';
   static const String register = '/register';
   static const String account = '/account';
+  static const String membersList = '/membersList';
 }

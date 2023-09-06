@@ -22,7 +22,9 @@ class UserUseCaseImpl extends UserUseCase {
 
   @override
   Stream<UserModel> getMyProfileStream() {
-    return userRepo.getMyProfileStream().map((event) => UserModel.fromRepo(event));
+    return userRepo
+        .getMyProfileStream()
+        .map((event) => UserModel.fromRepo(event));
   }
 
   @override
@@ -34,5 +36,12 @@ class UserUseCaseImpl extends UserUseCase {
   @override
   Future<String?> getMyProfileId() {
     return userRepo.getMyProfileId();
+  }
+
+  @override
+  Stream<List<UserModel>> getUsers() {
+    return userRepo
+        .getUsers()
+        .map((event) => event.map((e) => UserModel.fromRepo(e)).toList());
   }
 }

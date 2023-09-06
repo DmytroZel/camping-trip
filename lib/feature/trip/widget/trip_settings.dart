@@ -1,3 +1,4 @@
+import 'package:camp_trip/feature/trip/widget/user_list.dart';
 import 'package:flutter/material.dart';
 
 import '../trip_vm.dart';
@@ -13,6 +14,11 @@ class TripSettings extends StatefulWidget {
 
 class _TripSettingsState extends State<TripSettings> {
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -25,6 +31,12 @@ class _TripSettingsState extends State<TripSettings> {
               },
               icon: const Icon(Icons.check)),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          widget.vm.onShowUserList();
+        },
+        child: const Icon(Icons.add),
       ),
       body: ListView(
         shrinkWrap: true,
@@ -51,7 +63,40 @@ class _TripSettingsState extends State<TripSettings> {
             ],
           ),
           const Divider(),
-          const Text("Users"),
+          const Text("Members"),
+          GridView(
+            shrinkWrap: true,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3),
+            children: widget.vm.members
+                .map((e) => Column(
+                      children: [
+                        Text(e.userName),
+                        Text(e.role.toString()),
+                        IconButton(
+                            onPressed: () {
+                              //TODO
+                              // widget.vm.onChangedRole(e);
+                            },
+                            icon: const Icon(Icons.arrow_left)),
+                        IconButton(
+                            onPressed: () {
+                              //TODO
+                              // widget.vm.onChangedRole(e);
+                            },
+                            icon: const Icon(Icons.arrow_right))
+                      ],
+                    ))
+                .toList(),
+          ),
+          widget.vm.showUserList
+              ? UserList(
+                  users: widget.vm.users,
+                  onUserSelected: (user) {
+                    widget.vm.onUserSelected(user);
+                  },
+                )
+              : const SizedBox.shrink(),
         ],
       ),
     );

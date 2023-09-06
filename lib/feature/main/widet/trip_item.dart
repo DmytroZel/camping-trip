@@ -24,7 +24,7 @@ class TripItem extends StatelessWidget {
           children: [
             SizedBox(
               height: 100,
-              width: double.infinity,
+              width: 300,
               child: Stack(
                 children: [
                   ClipRRect(

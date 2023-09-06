@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:camp_trip/feature/account/widget/invite_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -59,6 +60,20 @@ class _AccountViewState extends BaseState<AccountView> {
                     height: 20,
                   ),
                   _genderWidget(),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    'Invites',
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  InviteList(
+                    invites: vm.invites,
+                    onAccept: vm.onAccept,
+                  ),
                   const SizedBox(
                     height: 20,
                   ),

@@ -1,26 +1,79 @@
+import 'dart:async';
+
 import 'package:camp_trip/common/base/base_vm.dart';
 import 'package:camp_trip/common/extension/stream_subscription_extensions.dart';
+import 'package:camp_trip/data/use_cases/invite_user_use_case/invite_user_use_case.dart';
 import 'package:camp_trip/data/use_cases/trip_use_case/trip_use_case.dart';
 import 'package:camp_trip/data/use_cases/user_use_case/user_use_case.dart';
 import 'package:camp_trip/domain/model/model/dish_model.dart';
 import 'package:camp_trip/domain/model/model/ingridient_model.dart';
 import 'package:camp_trip/domain/model/model/trip_model.dart';
+import 'package:camp_trip/domain/model/model/user_model.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
 class TripVM extends BaseVM {
   final TripUseCase _tripUseCase;
   final UserUseCase _userUseCase;
+  final InviteUserUseCase _inviteUserUseCase;
   String id;
   bool showSettings = false;
   String? newName;
   int period = 1;
+  List<UserModel> users = [];
+  bool showUserList = false;
   List<MemberModel> members = [];
   List<String> membersIds = [];
+  StreamSubscription? _subForUsersSubscription;
 
-  TripVM(this._tripUseCase, @factoryParam this.id, this._userUseCase) {
+  TripVM(this._tripUseCase, @factoryParam this.id, this._userUseCase,
+      this._inviteUserUseCase) {
     _subForTripModelChanges();
     _subForDishes();
+    _subForMembers();
+  }
+
+  _subForMembers() {
+    _tripUseCase.getMember(id).listen((event) {
+      _onMembersChanged(event);
+    }).toBag(bag);
+  }
+
+  onShowUserList() {
+    showUserList = !showUserList;
+    _subForUsers();
+    notifyListeners();
+  }
+
+  onUserSelected(UserModel userModel) {
+    _inviteUserUseCase.addOrUpdate(
+        userId: userModel.id,
+        userName: userModel.userName,
+        tripName: trip?.name ?? '',
+        tripId: trip?.id ?? '',
+        isRequest: false);
+    notifyListeners();
+  }
+
+  _onMembersChanged(List<MemberModel> event) {
+    members = event;
+    notifyListeners();
+  }
+
+  onSubForUsers() {
+    _subForUsers();
+  }
+
+  _subForUsers() {
+    _subForUsersSubscription?.cancel();
+    _subForUsersSubscription = _userUseCase.getUsers().listen((event) {
+      _onUsersChanged(event);
+    }).toBag(bag);
+  }
+
+  _onUsersChanged(List<UserModel> event) {
+    users = event;
+    notifyListeners();
   }
 
   TripModel? trip;

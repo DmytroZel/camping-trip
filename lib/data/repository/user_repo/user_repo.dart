@@ -4,6 +4,7 @@ abstract class UserRepo {
   Future<void> addOrUpdate(UserModelRepo userModel);
   Future<void> deleteUser(String userId);
   Future<UserModelRepo> getUser(String userId);
+  Stream<List<UserModelRepo>> getUsers();
   Stream<UserModelRepo> getMyProfileStream();
   Future<String?> getMyProfileId();
 }

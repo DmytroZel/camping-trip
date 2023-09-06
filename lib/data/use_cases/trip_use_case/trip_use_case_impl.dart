@@ -51,4 +51,11 @@ class TripUseCaseImpl extends TripUseCase {
         .getDishItems(tripId)
         .map((event) => event.map((e) => DishModel.fromRepo(e)).toList());
   }
+
+  @override
+  Stream<List<MemberModel>> getMember(String tripId) {
+    return tripRepo
+        .getMember(tripId)
+        .map((event) => event.map((e) => MemberModel.fromRepo(e)).toList());
+  }
 }

@@ -34,4 +34,10 @@ class FirebaseUserApiImpl extends FirebaseUserAPi {
         .snapshots()
         .map((user) => FirebaseUserModel.fromJson(user.data()!));
   }
+
+  @override
+  Stream<List<FirebaseUserModel>> getUsers() {
+    return users.snapshots().map((event) =>
+        event.docs.map((e) => FirebaseUserModel.fromJson(e.data())).toList());
+  }
 }

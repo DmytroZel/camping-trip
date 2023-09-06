@@ -41,4 +41,10 @@ class UserRepoImpl extends UserRepo {
   Future<String?> getMyProfileId() async {
     return sharedPreferencesModule.getCurrentProfileId();
   }
+
+  @override
+  Stream<List<UserModelRepo>> getUsers() {
+    return firebaseUserAPi.getUsers().map(
+        (event) => event.map((e) => UserModelRepo.fromFirebase(e)).toList());
+  }
 }

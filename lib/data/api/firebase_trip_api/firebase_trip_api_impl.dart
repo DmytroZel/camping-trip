@@ -1,5 +1,4 @@
 import 'package:camp_trip/domain/model/api_model/firebase_dish_model.dart';
-import 'package:camp_trip/domain/model/api_model/firebase_user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:injectable/injectable.dart';
 
@@ -24,19 +23,20 @@ class FirebaseTripApiImpl extends FirebaseTripApi {
   }
 
   @override
-  Stream<List<FirebaseTripModel>> getTrips() {
-    return trips.snapshots().map((event) => event.docs
-        .map<FirebaseTripModel>(
-            (trip) => FirebaseTripModel.fromJson(trip.data()))
-        .toList());
+  Stream<List<FirebaseTripModel>> getTrips(String userId) {
+    return trips.where('organizer', isEqualTo: userId).snapshots().map(
+        (event) => event.docs
+            .map<FirebaseTripModel>(
+                (trip) => FirebaseTripModel.fromJson(trip.data()))
+            .toList());
   }
 
   @override
-  Future<void> addOrUpdateMember(FirebaseUserModel userModel, String tripId) {
+  Future<void> addOrUpdateMember(FirebaseMemberModel userModel, String tripId) {
     return trips
         .doc(tripId)
         .collection('members')
-        .doc(userModel.id)
+        .doc(userModel.userId)
         .set(userModel.toJson());
   }
 
@@ -70,5 +70,22 @@ class FirebaseTripApiImpl extends FirebaseTripApi {
   @override
   Future<void> deleteDishItem(String dishItemId, String tripId) {
     return trips.doc(tripId).collection('dishes').doc(dishItemId).delete();
+  }
+
+  @override
+  Stream<FirebaseTripModel> getTripUserExist(String id) {
+    return trips
+        .where('members', arrayContains: id)
+        .snapshots()
+        .map((event) => FirebaseTripModel.fromJson(event.docs.first.data()));
+  }
+
+  @override
+  Stream<List<FirebaseMemberModel>> getMember(String tripId) {
+    return trips.doc(tripId).collection('members').snapshots().map((event) =>
+        event.docs
+            .map<FirebaseMemberModel>(
+                (member) => FirebaseMemberModel.fromJson(member.data()))
+            .toList());
   }
 }

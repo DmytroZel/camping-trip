@@ -1,3 +1,5 @@
+import 'package:camp_trip/domain/model/api_model/firebase_user_model.dart';
+
 import '../repository/trip_model_repo.dart';
 
 class FirebaseTripModel {
@@ -56,4 +58,14 @@ class FirebaseMemberModel {
 
   Map<String, dynamic> toJson() =>
       {'role': role, 'userName': userName, 'userId': userId};
+
+  FirebaseMemberModel.userModel(FirebaseUserModel r)
+      : role = 0,
+        userName = r.userName,
+        userId = r.id;
+
+  FirebaseMemberModel.fromRepo(MemberModelRepo r)
+      : role = r.role,
+        userName = r.userName,
+        userId = r.userId;
 }
