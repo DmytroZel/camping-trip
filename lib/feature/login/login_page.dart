@@ -1,5 +1,6 @@
 import 'package:camp_trip/common/extension/stream_subscription_extensions.dart';
 import 'package:camp_trip/feature/login/login_vm.dart';
+import 'package:camp_trip/feature/login/widget/choose_gender.dart';
 import 'package:camp_trip/feature/login/widget/register_text_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -130,13 +131,16 @@ class _LoginPageState extends BaseState<LoginPage> {
                     padding: const EdgeInsets.all(16.0),
                     child: Stack(
                       children: [
-                        GestureDetector(
-                          onTap: () {
-                            vm.onRegisterTap();
-                          },
-                          child: const Icon(
-                            Icons.arrow_back_ios,
-                            color: Colors.white,
+                        Visibility(
+                          visible: vm.showRegisterPage,
+                          child: GestureDetector(
+                            onTap: () {
+                              vm.onRegisterTap();
+                            },
+                            child: const Icon(
+                              Icons.arrow_back_ios,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                         Column(
@@ -216,6 +220,22 @@ class _LoginPageState extends BaseState<LoginPage> {
                                   hint: 'User name',
                                   onChanged: vm.onUserNameChanged,
                                 )),
+                            Visibility(
+                              visible: vm.showRegisterPage,
+                              child: const SizedBox(
+                                height: 20,
+                              ),
+                            ),
+                            Visibility(
+                              visible: vm.showRegisterPage,
+                              child: ChooseGender(
+                                isMale: vm.sex,
+                                onGenderChanged: (bool value) {
+                                  vm.onGenderChanged(value);
+                                  successTrigger?.fire();
+                                },
+                              ),
+                            ),
                             const SizedBox(
                               height: 20,
                             ),
@@ -325,7 +345,9 @@ class _LoginPageState extends BaseState<LoginPage> {
                                             MediaQuery.of(context).size.width,
                                         color: Colors.blue.withOpacity(0.8),
                                         onPressed: () {
-                                          onRegisterTap();
+                                          vm.showRegisterPage
+                                              ? vm.onRegister()
+                                              : onRegisterTap();
                                         },
                                         child: const Padding(
                                           padding: EdgeInsets.symmetric(

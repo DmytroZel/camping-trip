@@ -1,4 +1,3 @@
-
 import '../repository/trip_model_repo.dart';
 
 class FirebaseTripModel {

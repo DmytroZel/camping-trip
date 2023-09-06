@@ -12,7 +12,7 @@ abstract class AuthRepo {
   Future<void> setCurrentProfileId(String? id);
 
   Future<String?> registerWithEmailAndPassword(
-      String email, String password, String userName);
+      String email, String password, String userName, bool gender);
 
   Future<String?> signInWithEmailAndPassword(String email, String password);
 

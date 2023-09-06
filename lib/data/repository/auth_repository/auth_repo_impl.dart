@@ -54,12 +54,13 @@ class AuthRepoImpl implements AuthRepo {
 
   @override
   Future<String?> registerWithEmailAndPassword(
-      String email, String password, String userName) async {
+      String email, String password, String userName, bool gender) async {
     final uid =
         await firebaseAuthModule.registerWithEmailAndPassword(email, password);
     if (uid == null) return null;
     await setCurrentProfileId(uid);
-    final user = FirebaseUserModel(id: uid, userName: userName, email: email);
+    final user = FirebaseUserModel(
+        id: uid, userName: userName, email: email, gender: gender);
     await firebaseUserAPi.addOrUpdate(user);
     return uid;
   }

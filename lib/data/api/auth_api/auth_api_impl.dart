@@ -36,7 +36,11 @@ class FirebaseAuthModuleImpl implements AuthApi {
       email: email,
       password: password,
     );
-    return cred.user?.uid;
+    if (cred.user != null) {
+      return cred.user?.uid;
+    } else {
+      return Future.error(cred.credential?.providerId ?? 'Error');
+    }
   }
 
   @override

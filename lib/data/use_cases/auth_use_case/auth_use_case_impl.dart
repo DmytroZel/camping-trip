@@ -31,8 +31,9 @@ class AuthUseCaseImpl extends AuthUseCase {
 
   @override
   Future<String?> registerWithEmailAndPassword(
-      String email, String password, String userName) {
-    return authRepo.registerWithEmailAndPassword(email, password, userName);
+      String email, String password, String userName, bool gender) {
+    return authRepo.registerWithEmailAndPassword(
+        email, password, userName, gender);
   }
 
   @override

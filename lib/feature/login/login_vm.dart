@@ -61,30 +61,38 @@ class LoginVm extends BaseVM {
     return res;
   }
 
-  onSexChanged(bool val){
+  onSexChanged(bool val) {
     sex = val;
     notifyListeners();
   }
 
-  onConfirmPasswordChanged(String val){
+  onConfirmPasswordChanged(String val) {
     _confirmPassword = val;
     notifyListeners();
   }
 
-  checkPassword(){
-    if(_password != null && _confirmPassword != null && _password!.isNotEmpty && _confirmPassword!.isNotEmpty){
-      if(_password == _confirmPassword){
+  checkPassword() {
+    if (_password != null &&
+        _confirmPassword != null &&
+        _password!.isNotEmpty &&
+        _confirmPassword!.isNotEmpty) {
+      if (_password == _confirmPassword) {
         return true;
-      }else{
+      } else {
         return false;
       }
-    }else{
+    } else {
       return false;
     }
   }
 
-  onRegisterTap(){
+  onRegisterTap() {
     showRegisterPage = !showRegisterPage;
+    notifyListeners();
+  }
+
+  onGenderChanged(bool val) {
+    sex = val;
     notifyListeners();
   }
 
@@ -98,8 +106,7 @@ class LoginVm extends BaseVM {
     bool res = false;
     try {
       res = await _singInWithEmailAndPassword();
-    } catch (_) {
-    }
+    } catch (_) {}
     notifyListeners();
     hideProgress();
     return res;
@@ -110,11 +117,20 @@ class LoginVm extends BaseVM {
     if (_email != null &&
         _password != null &&
         _email!.isNotEmpty &&
-        _password!.isNotEmpty) {
-      _authUseCase.registerWithEmailAndPassword(_email!, _password!, userName!);
-      goToMain.sink.add(null);
+        _password!.isNotEmpty &&
+        userName != null &&
+        userName!.isNotEmpty &&
+        checkPassword()) {
+      try {
+        await _authUseCase.registerWithEmailAndPassword(
+            _email!, _password!, userName!, sex);
+        goToMain.sink.add(null);
+      } catch (e) {
+        showError.sink
+            .add("The email address is already in use by another account");
+      }
     } else {
-      showError.sink.add("Please enter email and password");
+      showError.sink.add("Please enter all data");
     }
     hideProgress();
   }
