@@ -3,12 +3,12 @@ import 'dart:async';
 import 'package:camp_trip/common/base/base_vm.dart';
 import 'package:camp_trip/common/extension/stream_subscription_extensions.dart';
 import 'package:camp_trip/domain/model/model/trip_model.dart';
-import 'package:camp_trip/domain/model/repository/user_model_repo.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../data/use_cases/auth_use_case/auth_use_case.dart';
 import '../../data/use_cases/trip_use_case/trip_use_case.dart';
 import '../../data/use_cases/user_use_case/user_use_case.dart';
+import '../../domain/model/model/user_model.dart';
 
 @injectable
 class MainVm extends BaseVM {
@@ -22,7 +22,7 @@ class MainVm extends BaseVM {
     _subForTrips();
   }
 
-  UserModelRepo? userModel;
+  UserModel? userModel;
   List<TripModel> trips = [];
 
   StreamController<void> goToInitial = StreamController<void>();
@@ -48,7 +48,7 @@ class MainVm extends BaseVM {
     notifyListeners();
   }
 
-  _onChangeUserModel(UserModelRepo user) {
+  _onChangeUserModel(UserModel user) {
     userModel = user;
     notifyListeners();
   }

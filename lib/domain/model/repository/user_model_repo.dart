@@ -5,24 +5,28 @@ class UserModelRepo {
   String id;
   String userName;
   String email;
-  bool? gender;
+  bool gender;
+  String? image;
 
   UserModelRepo({
     required this.id,
     required this.userName,
     required this.email,
-    this.gender,
+    required this.gender,
+    this.image,
   });
 
   UserModelRepo.fromFirebase(FirebaseUserModel r)
       : id = r.id,
         userName = r.userName,
-        gender = r.gender,
-        email = r.email;
+        gender = r.gender ?? true,
+        email = r.email,
+        image = r.image;
 
   UserModelRepo.fromModel(UserModel r)
       : id = r.id,
         userName = r.userName,
         gender = r.gender,
-        email = r.email;
+        email = r.email,
+        image = r.image;
 }

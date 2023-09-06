@@ -1,9 +1,9 @@
-import '../../../domain/model/repository/user_model_repo.dart';
+import '../../../domain/model/model/user_model.dart';
 
 abstract class UserUseCase {
-  Future<void> addOrUpdate(UserModelRepo userModel);
+  Future<void> addOrUpdate(UserModel userModel);
   Future<void> deleteUser(String userId);
-  Future<UserModelRepo> getUser(String userId);
-  Stream<UserModelRepo> getMyProfileStream();
+  Future<UserModel> getUser(String userId);
+  Stream<UserModel> getMyProfileStream();
   Future<String?> getMyProfileId();
 }

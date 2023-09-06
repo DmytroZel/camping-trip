@@ -1,5 +1,7 @@
 import 'package:camp_trip/feature/%20ingredients/add_ingredients/add_ingredients_view.dart';
 import 'package:camp_trip/feature/%20ingredients/add_ingredients/add_ingredients_vm.dart';
+import 'package:camp_trip/feature/account/account_view.dart';
+import 'package:camp_trip/feature/account/account_vm.dart';
 import 'package:camp_trip/feature/create_trip/create_trip_vm.dart';
 import 'package:camp_trip/feature/login/login_page.dart';
 import 'package:camp_trip/feature/login/login_vm.dart';
@@ -115,6 +117,20 @@ class AppRouters {
           child: ChangeNotifierProvider(
             create: (context) => serviceLocator<CreateTripVm>(),
             child: const CreateTrioView(),
+          ),
+        );
+      },
+    ),
+    GoRoute(
+      name: ScreenNames.account,
+      path: ScreenNames.account,
+      pageBuilder: (context, state) {
+        return _buildPageWithDefaultTransition(
+          context: context,
+          state: state,
+          child: ChangeNotifierProvider(
+            create: (context) => serviceLocator<AccountVM>(),
+            child: const AccountView(),
           ),
         );
       },

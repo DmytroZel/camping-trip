@@ -29,13 +29,13 @@ class _MainPageState extends BaseState<MainPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.lightGreen,
-        title: Text("Camping trip"),
+        title: const Text("Camping trip"),
         actions: [
           IconButton(
             onPressed: () {
-              // context.go(ScreenNames.profile);
+              context.push(ScreenNames.account);
             },
-            icon: Icon(Icons.person),
+            icon: const Icon(Icons.person),
           ),
         ],
       ),
@@ -71,6 +71,12 @@ class _MainPageState extends BaseState<MainPage> {
             ),
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          context.push(ScreenNames.createTrip);
+        },
+        child: const Icon(Icons.add),
       ),
     );
   }

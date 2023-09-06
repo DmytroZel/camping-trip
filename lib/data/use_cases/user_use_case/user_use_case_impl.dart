@@ -1,7 +1,9 @@
 import 'package:camp_trip/data/repository/user_repo/user_repo.dart';
 import 'package:camp_trip/data/use_cases/user_use_case/user_use_case.dart';
-import 'package:camp_trip/domain/model/repository/user_model_repo.dart';
 import 'package:injectable/injectable.dart';
+
+import '../../../domain/model/model/user_model.dart';
+import '../../../domain/model/repository/user_model_repo.dart';
 
 @Injectable(as: UserUseCase)
 class UserUseCaseImpl extends UserUseCase {
@@ -9,8 +11,8 @@ class UserUseCaseImpl extends UserUseCase {
 
   UserUseCaseImpl(this.userRepo);
   @override
-  Future<void> addOrUpdate(UserModelRepo userModel) {
-    return userRepo.addOrUpdate(userModel);
+  Future<void> addOrUpdate(UserModel userModel) {
+    return userRepo.addOrUpdate(UserModelRepo.fromModel(userModel));
   }
 
   @override
@@ -19,13 +21,14 @@ class UserUseCaseImpl extends UserUseCase {
   }
 
   @override
-  Stream<UserModelRepo> getMyProfileStream() {
-    return userRepo.getMyProfileStream();
+  Stream<UserModel> getMyProfileStream() {
+    return userRepo.getMyProfileStream().map((event) => UserModel.fromRepo(event));
   }
 
   @override
-  Future<UserModelRepo> getUser(String userId) {
-    return userRepo.getUser(userId);
+  Future<UserModel> getUser(String userId) async {
+    final user = await userRepo.getUser(userId);
+    return UserModel.fromRepo(user);
   }
 
   @override
