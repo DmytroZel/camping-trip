@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="pink">#FF7BF2</color>
+    <color name="green">#55FF7A</color>
+    <color name="blue">#0500FF</color>
+    <color name="red">#FF9574</color>
+    <color name="darkGrey">#667080</color>
+    <color name="lightGrey">#EEF1F4</color>
+    <color name="turquoise">#8DF8FF</color>
+    <color name="purple">#8D67FD</color>
+    <color name="lightPurple">#E8E1FF</color>
+    <color name="grey">#A2A2A2</color>
+    <color name="pink">#FF9FDB</color>
+    <color name="pinkRegistration">#FF98DE</color>
+    <color name="greyInput">#F7F7F7</color>
+    <color name="blackInput">#171515</color>
+    <color name="disabledBackground">#D1D0D0</color>
+    <color name="disabledText">#747373</color>
+    <color name="errorColor">#FF3B30</color>
+    <color name="pinkButton">#FFECF8</color>
+    <color name="pinkButtonTitle">#CC7FAF</color>
+    <color name="blackBottomSheet">#464444</color>
+    <color name="purpleConnectBGLine">#D1C2FE</color>
+    <color name="purpleConnectBG">#E8E1FF</color>
+    <color name="purpleSuccessSub">#A486FD</color>
+    <color name="lightPink">#FFD9F1</color>
+    <color name="tokenBG">#FFF2C7</color>
+    <color name="loginBG">#d6e2ea</color>
+
+</resources>

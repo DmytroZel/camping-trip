@@ -31,6 +31,10 @@ class BaseState<T extends StatefulWidget> extends State<T> {
     }).toBag(bag);
   }
 
+  goBack() {
+    context.pop();
+  }
+
   handleScroll(
       {required UserScrollNotification notification, required BaseVM vm}) {
     final ScrollDirection direction = notification.direction;

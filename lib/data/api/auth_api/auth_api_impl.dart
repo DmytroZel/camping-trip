@@ -30,7 +30,8 @@ class FirebaseAuthModuleImpl implements AuthApi {
   }
 
   @override
-  Future<String?> registerWithEmailAndPassword(String email, String password) async {
+  Future<String?> registerWithEmailAndPassword(
+      String email, String password) async {
     final cred = await FirebaseAuth.instance.createUserWithEmailAndPassword(
       email: email,
       password: password,
@@ -39,12 +40,10 @@ class FirebaseAuthModuleImpl implements AuthApi {
   }
 
   @override
-  Future<String?> signInWithEmailAndPassword(String email, String password) async {
-    final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: email,
-        password: password
-    );
+  Future<String?> signInWithEmailAndPassword(
+      String email, String password) async {
+    final credential = await FirebaseAuth.instance
+        .signInWithEmailAndPassword(email: email, password: password);
     return credential.user?.uid;
   }
-
 }

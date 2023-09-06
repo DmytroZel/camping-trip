@@ -2,24 +2,28 @@ import 'dart:async';
 
 import 'package:camp_trip/common/base/base_vm.dart';
 import 'package:camp_trip/common/extension/stream_subscription_extensions.dart';
+import 'package:camp_trip/domain/model/model/trip_model.dart';
 import 'package:camp_trip/domain/model/repository/user_model_repo.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../data/use_cases/auth_use_case/auth_use_case.dart';
+import '../../data/use_cases/trip_use_case/trip_use_case.dart';
 import '../../data/use_cases/user_use_case/user_use_case.dart';
-
 
 @injectable
 class MainVm extends BaseVM {
   final AuthUseCase _authUseCase;
   final UserUseCase _userUseCase;
+  final TripUseCase _tripUseCase;
 
-  MainVm(this._authUseCase, this._userUseCase){
-   _subForAuthChanges();
-   _subForUserModel();
+  MainVm(this._authUseCase, this._userUseCase, this._tripUseCase) {
+    _subForAuthChanges();
+    _subForUserModel();
+    _subForTrips();
   }
 
   UserModelRepo? userModel;
+  List<TripModel> trips = [];
 
   StreamController<void> goToInitial = StreamController<void>();
 
@@ -27,14 +31,24 @@ class MainVm extends BaseVM {
     await _authUseCase.singOut();
   }
 
-
-  _subForUserModel(){
+  _subForUserModel() {
     _userUseCase.getMyProfileStream().listen((event) {
       _onChangeUserModel(event);
     }).toBag(bag);
   }
 
-  _onChangeUserModel(UserModelRepo user){
+  _subForTrips() {
+    _tripUseCase.getTrips().listen((event) {
+      _onChangeTrips(event);
+    }).toBag(bag);
+  }
+
+  _onChangeTrips(List<TripModel> trips) {
+    this.trips = trips;
+    notifyListeners();
+  }
+
+  _onChangeUserModel(UserModelRepo user) {
     userModel = user;
     notifyListeners();
   }
@@ -47,7 +61,11 @@ class MainVm extends BaseVM {
     }).toBag(bag);
   }
 
-  String getUserName(){
+  String getUserName() {
     return userModel?.userName ?? '';
+  }
+
+  bool isTripOwner(String tripId) {
+    return userModel?.id == tripId;
   }
 }

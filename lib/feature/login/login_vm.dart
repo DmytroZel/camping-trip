@@ -11,13 +11,21 @@ class LoginVm extends BaseVM {
   String? _email;
   String? _password;
   String? userName;
+  bool sex = true;
+  String? _confirmPassword;
+  bool isRegister = false;
+  bool showRegisterPage = false;
+  bool showPassword = false;
   StreamController<void> goToMain = StreamController<void>();
+  StreamController<bool> loginRes = StreamController<bool>();
   StreamController<void> showRegisterMassage = StreamController<void>();
   StreamController<String> showError = StreamController<String>();
 
   LoginVm(this._authUseCase);
 
-  _singInWithEmailAndPassword() async {
+  Future<bool> _singInWithEmailAndPassword() async {
+    showProgress();
+    bool res = false;
     try {
       if (_email != null &&
           _password != null &&
@@ -25,32 +33,79 @@ class LoginVm extends BaseVM {
           _password!.isNotEmpty) {
         try {
           await _authUseCase.signInWithEmailAndPassword(_email!, _password!);
+          loginRes.add(true);
           goToMain.sink.add(null);
         } catch (e) {
-          showError.sink.add(e.toString());
+          isRegister = true;
+          loginRes.add(false);
+          showError.sink.add(
+              'Email or password is incorrect, please try again or register');
         }
       } else {
         if (_email != null &&
             _password != null &&
             _email!.isNotEmpty &&
             _password!.isNotEmpty) {
+          loginRes.add(false);
           showRegisterMassage.sink.add(null);
         } else {
+          loginRes.add(false);
           showError.sink.add("Please enter email and password");
         }
       }
     } catch (e) {
+      loginRes.add(false);
       showError.sink.add("Please enter email and password");
+    }
+    notifyListeners();
+    return res;
+  }
+
+  onSexChanged(bool val){
+    sex = val;
+    notifyListeners();
+  }
+
+  onConfirmPasswordChanged(String val){
+    _confirmPassword = val;
+    notifyListeners();
+  }
+
+  checkPassword(){
+    if(_password != null && _confirmPassword != null && _password!.isNotEmpty && _confirmPassword!.isNotEmpty){
+      if(_password == _confirmPassword){
+        return true;
+      }else{
+        return false;
+      }
+    }else{
+      return false;
     }
   }
 
-  onLoginTap() async {
-    showProgress();
-    await _singInWithEmailAndPassword();
-    hideProgress();
+  onRegisterTap(){
+    showRegisterPage = !showRegisterPage;
+    notifyListeners();
   }
 
-  onRegisterTap() async {
+  onShowPasswordTap() {
+    showPassword = !showPassword;
+    notifyListeners();
+  }
+
+  Future<bool> onLoginTap() async {
+    showProgress();
+    bool res = false;
+    try {
+      res = await _singInWithEmailAndPassword();
+    } catch (_) {
+    }
+    notifyListeners();
+    hideProgress();
+    return res;
+  }
+
+  onRegister() async {
     showProgress();
     if (_email != null &&
         _password != null &&

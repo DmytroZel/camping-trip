@@ -26,13 +26,13 @@ class AuthUseCaseImpl extends AuthUseCase {
 
   @override
   bool isLogInBool() {
-     return authRepo.isLogInBool();
+    return authRepo.isLogInBool();
   }
 
   @override
-  Future<String?> registerWithEmailAndPassword(String email, String password, String userName) {
+  Future<String?> registerWithEmailAndPassword(
+      String email, String password, String userName) {
     return authRepo.registerWithEmailAndPassword(email, password, userName);
-
   }
 
   @override

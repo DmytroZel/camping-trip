@@ -1,4 +1,4 @@
-import '../api_model/firebase_user/firebase_user_model.dart';
+import '../api_model/firebase_user_model.dart';
 import '../model/user_model.dart';
 
 class UserModelRepo {

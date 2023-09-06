@@ -1,11 +1,10 @@
-
-
 import 'package:camp_trip/data/api/user_api/firebase_user_api.dart';
-import 'package:camp_trip/domain/model/api_model/firebase_user/firebase_user_model.dart';
+import 'package:camp_trip/domain/model/api_model/firebase_user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:injectable/injectable.dart';
+
 @Injectable(as: FirebaseUserAPi)
-class FirebaseUserApiImpl extends FirebaseUserAPi{
+class FirebaseUserApiImpl extends FirebaseUserAPi {
   final FirebaseFirestore firebaseFirestore;
   late final users = firebaseFirestore.collection('users');
 
@@ -22,14 +21,17 @@ class FirebaseUserApiImpl extends FirebaseUserAPi{
 
   @override
   Future<FirebaseUserModel> getUser(String userId) {
-    return users.doc(userId).get().then((value) => FirebaseUserModel.fromJson(value.data()!));
+    return users
+        .doc(userId)
+        .get()
+        .then((value) => FirebaseUserModel.fromJson(value.data()!));
   }
 
   @override
   Stream<FirebaseUserModel> getMyProfileStream(String userId) {
-   return users
-       .doc(userId)
-       .snapshots()
-       .map((user) => FirebaseUserModel.fromJson(user.data()!));
+    return users
+        .doc(userId)
+        .snapshots()
+        .map((user) => FirebaseUserModel.fromJson(user.data()!));
   }
 }

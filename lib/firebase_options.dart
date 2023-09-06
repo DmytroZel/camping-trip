@@ -49,7 +49,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '443653754124',
     projectId: 'camp-app-41299',
     authDomain: 'camp-app-41299.firebaseapp.com',
-    databaseURL: 'https://camp-app-41299-default-rtdb.europe-west1.firebasedatabase.app',
+    databaseURL:
+        'https://camp-app-41299-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'camp-app-41299.appspot.com',
   );
 
@@ -58,7 +59,8 @@ class DefaultFirebaseOptions {
     appId: '1:443653754124:android:28977832a2ea39eb388d29',
     messagingSenderId: '443653754124',
     projectId: 'camp-app-41299',
-    databaseURL: 'https://camp-app-41299-default-rtdb.europe-west1.firebasedatabase.app',
+    databaseURL:
+        'https://camp-app-41299-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'camp-app-41299.appspot.com',
   );
 
@@ -67,9 +69,11 @@ class DefaultFirebaseOptions {
     appId: '1:443653754124:ios:ccea89b4d84d0ebf388d29',
     messagingSenderId: '443653754124',
     projectId: 'camp-app-41299',
-    databaseURL: 'https://camp-app-41299-default-rtdb.europe-west1.firebasedatabase.app',
+    databaseURL:
+        'https://camp-app-41299-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'camp-app-41299.appspot.com',
-    iosClientId: '443653754124-dlb3vbkobe018chlb5cl9v55u3nkgi2p.apps.googleusercontent.com',
+    iosClientId:
+        '443653754124-dlb3vbkobe018chlb5cl9v55u3nkgi2p.apps.googleusercontent.com',
     iosBundleId: 'com.example.campTrip',
   );
 
@@ -78,9 +82,11 @@ class DefaultFirebaseOptions {
     appId: '1:443653754124:ios:ccea89b4d84d0ebf388d29',
     messagingSenderId: '443653754124',
     projectId: 'camp-app-41299',
-    databaseURL: 'https://camp-app-41299-default-rtdb.europe-west1.firebasedatabase.app',
+    databaseURL:
+        'https://camp-app-41299-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'camp-app-41299.appspot.com',
-    iosClientId: '443653754124-dlb3vbkobe018chlb5cl9v55u3nkgi2p.apps.googleusercontent.com',
+    iosClientId:
+        '443653754124-dlb3vbkobe018chlb5cl9v55u3nkgi2p.apps.googleusercontent.com',
     iosBundleId: 'com.example.campTrip',
   );
 }

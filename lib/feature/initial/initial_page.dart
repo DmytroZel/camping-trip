@@ -1,10 +1,11 @@
-
 import 'package:camp_trip/common/extension/stream_subscription_extensions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../common/base/base_state.dart';
+import '../../gen/assets.gen.dart';
 import '../../routers/screen_names.dart';
 import 'initila_vm.dart';
 
@@ -16,8 +17,16 @@ class InitialPage extends StatefulWidget {
 }
 
 class _InitialPageState extends BaseState<InitialPage> {
+  double width = 0;
+  double height = 0;
   @override
   void initState() {
+    Future.delayed(const Duration(milliseconds: 200), () {
+      setState(() {
+        width = 200;
+        height = 200;
+      });
+    });
     super.initState();
     _subForGoNext();
   }
@@ -26,14 +35,18 @@ class _InitialPageState extends BaseState<InitialPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Colors.lightGreen,
-        child: const Center(
-          child: Text(
-            "Camping trip",
-            style: TextStyle(color: Colors.white, fontSize: 24),
-          ),
-        ),
-      ),
+          color: Colors.lightBlue,
+          child: Center(
+            child: AnimatedContainer(
+                duration: const Duration(milliseconds: 1000),
+                width: width,
+                height: height,
+                child: SvgPicture.asset(
+                  Assets.icons.logo.path,
+                  colorFilter:
+                      const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                )),
+          )),
     );
   }
 

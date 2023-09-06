@@ -1,6 +1,4 @@
-
-import 'package:camp_trip/domain/model/api_model/firebase_trip_model/firebase_trip_model.dart';
-import 'package:camp_trip/domain/model/repository/user_model_repo.dart';
+import 'package:camp_trip/domain/model/api_model/firebase_trip_model.dart';
 
 import '../model/trip_model.dart';
 
@@ -9,7 +7,7 @@ class TripModelRepo {
   String name;
   String period;
   String organizer;
-  List<MemberModelRepo> members = [];
+  List<String> members = [];
 
   TripModelRepo({
     required this.id,
@@ -24,18 +22,17 @@ class TripModelRepo {
         name = r.name,
         period = r.period,
         organizer = r.organizer,
-        members = r.members.map((e) => MemberModelRepo.fromFirebase(e)).toList();
+        members = r.members;
 
   TripModelRepo.fromModel(TripModel r)
-    : id = r.id,
-      name = r.name,
-      period = r.period,
-      organizer = r.organizer,
-      members = r.members.map((e) => MemberModelRepo.fromModel(e)).toList();
+      : id = r.id,
+        name = r.name,
+        period = r.period,
+        organizer = r.organizer,
+        members = r.members;
 }
 
-
-class MemberModelRepo{
+class MemberModelRepo {
   static const member = 0;
   static const admin = 1;
   static const cook = 2;
@@ -44,20 +41,22 @@ class MemberModelRepo{
   static const medic = 5;
 
   int role;
-  UserModelRepo user;
+  String userName;
+  String userId;
 
   MemberModelRepo({
     required this.role,
-    required this.user,
+    required this.userName,
+    required this.userId,
   });
 
   MemberModelRepo.fromFirebase(FirebaseMemberModel r)
       : role = r.role,
-        user = UserModelRepo.fromFirebase(r.user);
+        userName = r.userName,
+        userId = r.userId;
 
   MemberModelRepo.fromModel(MemberModel r)
       : role = r.role,
-        user = UserModelRepo.fromModel(r.user);
-
-
+        userName = r.userName,
+        userId = r.userId;
 }

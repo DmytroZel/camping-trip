@@ -5,19 +5,26 @@ import '../../common/base/base_vm.dart';
 import '../../data/use_cases/auth_use_case/auth_use_case.dart';
 
 @injectable
-class InitialVm extends BaseVM{
+class InitialVm extends BaseVM {
   final AuthUseCase _authUseCase;
 
   InitialVm(this._authUseCase) {
     bagSub.add(isLogIn);
   }
 
-
   StreamController<bool> isLogIn = StreamController<bool>();
+  double width = 0;
+  double height = 0;
 
   startTimer() async {
     await Future.delayed(const Duration(seconds: 2));
     _subForAuthChanges();
+  }
+
+  onStartAnimation() {
+    width = 200;
+    height = 200;
+    notifyListeners();
   }
 
   _subForAuthChanges() async {

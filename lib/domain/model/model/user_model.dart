@@ -1,6 +1,6 @@
 import 'package:camp_trip/domain/model/repository/user_model_repo.dart';
 
-class UserModel{
+class UserModel {
   String id;
   String userName;
   String email;
@@ -15,4 +15,16 @@ class UserModel{
       : id = r.id,
         userName = r.userName,
         email = r.email;
+
+  copyWith({
+    String? id,
+    String? userName,
+    String? email,
+  }) {
+    return UserModel(
+      id: id ?? this.id,
+      userName: userName ?? this.userName,
+      email: email ?? this.email,
+    );
+  }
 }

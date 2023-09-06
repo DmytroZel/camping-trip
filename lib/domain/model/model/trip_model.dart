@@ -1,13 +1,11 @@
-import 'package:camp_trip/domain/model/model/user_model.dart';
-
 import '../repository/trip_model_repo.dart';
 
-class TripModel{
+class TripModel {
   String id;
   String name;
   String period;
   String organizer;
-  List<MemberModel> members = [];
+  List<String> members = [];
 
   TripModel({
     required this.id,
@@ -22,10 +20,10 @@ class TripModel{
         name = r.name,
         period = r.period,
         organizer = r.organizer,
-        members = r.members.map((e) => MemberModel.fromRepo(e)).toList();
+        members = r.members;
 }
 
-class MemberModel{
+class MemberModel {
   static const member = 0;
   static const admin = 1;
   static const cook = 2;
@@ -34,14 +32,29 @@ class MemberModel{
   static const medic = 5;
 
   int role;
-  UserModel user;
+  String userName;
+  String userId;
 
   MemberModel({
     required this.role,
-    required this.user,
+    required this.userName,
+    required this.userId,
   });
 
   MemberModel.fromRepo(MemberModelRepo r)
       : role = r.role,
-        user = UserModel.fromRepo(r.user);
+        userName = r.userName,
+        userId = r.userId;
+
+  copyWith({
+    int? role,
+    String? userName,
+    String? userId,
+  }) {
+    return MemberModel(
+      role: role ?? this.role,
+      userName: userName ?? this.userName,
+      userId: userId ?? this.userId,
+    );
+  }
 }

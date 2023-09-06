@@ -16,5 +16,6 @@ abstract class DependencyModule {
   FirebaseStorage storage() => FirebaseStorage.instance;
 
   @preResolve
-  Future<StreamingSharedPreferences> sharedPreferences() => StreamingSharedPreferences.instance;
+  Future<StreamingSharedPreferences> sharedPreferences() =>
+      StreamingSharedPreferences.instance;
 }

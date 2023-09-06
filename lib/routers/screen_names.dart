@@ -1,5 +1,9 @@
-class ScreenNames{
+class ScreenNames {
   static const String initial = '/';
   static const String logIn = '/logIn';
   static const String main = '/main';
+  static const String createTrip = '/createTrip';
+  static const String trip = '/trip';
+  static const String ingredients = '/ingredients';
+  static const String register = '/register';
 }

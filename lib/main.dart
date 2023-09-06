@@ -34,23 +34,23 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      title: 'Isedor Modern',
+      title: 'Camping app',
       theme: ThemeData(
         appBarTheme: const AppBarTheme(
           systemOverlayStyle: SystemUiOverlayStyle.dark,
         ),
         // scaffoldBackgroundColor: ColorName.white,
-        buttonTheme:  ButtonThemeData(
-          height:48,
+        buttonTheme: ButtonThemeData(
+          height: 48,
           minWidth: double.infinity,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(6),
           ),
         ),
         textTheme: const TextTheme(
-          // labelLarge: TextStyle(fontFamily: FontFamily.outfit, fontWeight: FontWeight.w700, color: ColorName.white, fontSize: 16),
-          // bodyMedium: TextStyle(fontFamily: FontFamily.outfit, fontWeight: FontWeight.w400),
-        ),
+            // labelLarge: TextStyle(fontFamily: FontFamily.outfit, fontWeight: FontWeight.w700, color: ColorName.white, fontSize: 16),
+            // bodyMedium: TextStyle(fontFamily: FontFamily.outfit, fontWeight: FontWeight.w400),
+            ),
         // fontFamily: FontFamily.outfit,
       ),
       routerConfig: _router.r,

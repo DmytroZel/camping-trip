@@ -1,4 +1,4 @@
-import 'package:camp_trip/domain/model/api_model/firebase_user/firebase_user_model.dart';
+import 'package:camp_trip/domain/model/api_model/firebase_user_model.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../api/auth_api/auth_api.dart';
@@ -14,7 +14,7 @@ class AuthRepoImpl implements AuthRepo {
 
   AuthRepoImpl(this.firebaseUserAPi,
       {required this.firebaseAuthModule,
-        required this.sharedPreferencesModule});
+      required this.sharedPreferencesModule});
 
   @override
   Stream<bool> isLogIn() {
@@ -53,9 +53,11 @@ class AuthRepoImpl implements AuthRepo {
   }
 
   @override
-  Future<String?> registerWithEmailAndPassword(String email, String password, String userName) async {
-    final uid = await firebaseAuthModule.registerWithEmailAndPassword(email, password);
-    if(uid == null) return null;
+  Future<String?> registerWithEmailAndPassword(
+      String email, String password, String userName) async {
+    final uid =
+        await firebaseAuthModule.registerWithEmailAndPassword(email, password);
+    if (uid == null) return null;
     await setCurrentProfileId(uid);
     final user = FirebaseUserModel(id: uid, userName: userName, email: email);
     await firebaseUserAPi.addOrUpdate(user);
@@ -63,8 +65,10 @@ class AuthRepoImpl implements AuthRepo {
   }
 
   @override
-  Future<String?> signInWithEmailAndPassword(String email, String password)async {
-    final uid = await firebaseAuthModule.signInWithEmailAndPassword(email, password);
+  Future<String?> signInWithEmailAndPassword(
+      String email, String password) async {
+    final uid =
+        await firebaseAuthModule.signInWithEmailAndPassword(email, password);
     await setCurrentProfileId(uid);
     return uid;
   }
