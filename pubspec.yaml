@@ -49,6 +49,7 @@ dependencies:
   flutter_svg: ^2.0.5
   modal_bottom_sheet: 3.0.0-pre
   cached_network_image: ^3.2.3
+  image_picker: ^1.0.4
   rive:
 
 

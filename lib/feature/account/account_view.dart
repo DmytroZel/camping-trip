@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:camp_trip/feature/account/widget/invite_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../common/base/base_state.dart';
 import 'account_vm.dart';
@@ -35,11 +36,11 @@ class _AccountViewState extends BaseState<AccountView> {
         color: Colors.grey[200],
         width: MediaQuery.of(context).size.width,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 200, vertical: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           child: Card(
             child: Padding(
               padding:
-                  const EdgeInsets.symmetric(horizontal: 100, vertical: 16),
+                  const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -47,7 +48,12 @@ class _AccountViewState extends BaseState<AccountView> {
                   const SizedBox(
                     height: 20,
                   ),
-                  _buildAvatar(vm.getImage()),
+                  InkWell(
+                      splashColor: Colors.red, // Splash color
+                      onTap: () {
+                        _onPickPhoto();
+                      },
+                      child: _buildAvatar(vm.getImage())),
                   const SizedBox(
                     height: 20,
                   ),
@@ -83,45 +89,37 @@ class _AccountViewState extends BaseState<AccountView> {
           ),
         ),
       ),
-      floatingActionButton: Visibility(
-        visible: !vm.isProgress,
-        child: FloatingActionButton(
-          onPressed: () {
-            vm.onSave();
-          },
-          child: const Icon(Icons.save),
-        ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          if (vm.isProgress) {
+            return;
+          }
+          vm.onSave();
+        },
+        child: vm.isProgress ? const CircularProgressIndicator() : const Icon(Icons.save),
       ),
     );
   }
 
   Widget _buildAvatar(String? image) {
     if (image == null) {
-      return ClipOval(
+      return const ClipOval(
         child: Material(
           color: Colors.blue, // Button color
-          child: InkWell(
-            splashColor: Colors.red, // Splash color
-            onTap: () {},
-            child: const SizedBox(
-              width: 96,
-              height: 96,
-              child: Icon(Icons.person),
-            ),
+          child: SizedBox(
+            width: 120,
+            height: 120,
+            child: Icon(Icons.person),
           ),
         ),
       );
     }
-    return CachedNetworkImage(
-      imageUrl: image,
-      fit: BoxFit.fitHeight,
-      imageBuilder: (context, imageProvider) => Container(
-        width: 96,
-        height: 96,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          image: DecorationImage(image: imageProvider, fit: BoxFit.cover),
-        ),
+    return ClipOval(
+      child: Image.network(
+        image,
+        width: 120,
+        height: 120,
+        fit: BoxFit.cover,
       ),
     );
   }
@@ -165,5 +163,14 @@ class _AccountViewState extends BaseState<AccountView> {
         ),
       ],
     );
+  }
+
+  _onPickPhoto() async {
+    final vm = Provider.of<AccountVM>(context, listen: false);
+    final ImagePicker picker = ImagePicker();
+    final XFile? response = await picker.pickImage(source: ImageSource.gallery);
+    if (response != null) {
+      vm.onImageChanged(response);
+    }
   }
 }

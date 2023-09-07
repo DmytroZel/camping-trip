@@ -3,6 +3,7 @@ import 'package:camp_trip/common/extension/stream_subscription_extensions.dart';
 import 'package:camp_trip/data/use_cases/invite_user_use_case/invite_user_use_case.dart';
 import 'package:camp_trip/data/use_cases/user_use_case/user_use_case.dart';
 import 'package:camp_trip/domain/model/model/user_model.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../domain/model/model/invite_user_model.dart';
@@ -12,7 +13,7 @@ class AccountVM extends BaseVM {
   final UserUseCase userUseCase;
   final InviteUserUseCase inviteUserUseCase;
   UserModel? user;
-  String? newImage;
+  XFile? newImage;
   List<InviteUserModel> invites = [];
 
   AccountVM(this.userUseCase, this.inviteUserUseCase);
@@ -52,7 +53,7 @@ class AccountVM extends BaseVM {
   }
 
   String? getImage() {
-    return newImage ?? user?.image;
+    return newImage != null ? newImage?.path : user?.image;
   }
 
   String getGenderString() {
@@ -73,14 +74,19 @@ class AccountVM extends BaseVM {
     notifyListeners();
   }
 
-  onImageChanged(String? image) {
+  onImageChanged(XFile? image) async {
     newImage = image;
+    user = user?.copyWith(imageToUpload: image);
     notifyListeners();
   }
 
   onSave() async {
     showProgress();
-    await userUseCase.addOrUpdate(user!);
+    try {
+      await userUseCase.addOrUpdate(user!);
+    } catch (e) {
+      print(e);
+    }
     hideProgress();
     goBack();
   }

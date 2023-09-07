@@ -1,6 +1,10 @@
+import 'dart:typed_data';
+
 import 'package:camp_trip/data/api/user_api/firebase_user_api.dart';
+import 'package:camp_trip/data/firebase_storage/firebase_storage_module.dart';
 import 'package:camp_trip/data/repository/user_repo/user_repo.dart';
 import 'package:camp_trip/domain/model/repository/user_model_repo.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../domain/model/api_model/firebase_user_model.dart';
@@ -9,9 +13,10 @@ import '../../shared_preferences/shared_preferences_module.dart';
 @Injectable(as: UserRepo)
 class UserRepoImpl extends UserRepo {
   final FirebaseUserAPi firebaseUserAPi;
+  final FirebaseStorageModule firebaseStorageModule;
   final SharedPreferencesModule sharedPreferencesModule;
 
-  UserRepoImpl(this.firebaseUserAPi, this.sharedPreferencesModule);
+  UserRepoImpl(this.firebaseUserAPi, this.sharedPreferencesModule, this.firebaseStorageModule);
   @override
   Future<void> addOrUpdate(UserModelRepo userModel) {
     return firebaseUserAPi.addOrUpdate(FirebaseUserModel.fromRepo(userModel));
@@ -46,5 +51,10 @@ class UserRepoImpl extends UserRepo {
   Stream<List<UserModelRepo>> getUsers() {
     return firebaseUserAPi.getUsers().map(
         (event) => event.map((e) => UserModelRepo.fromFirebase(e)).toList());
+  }
+
+  @override
+  Future<String> uploadImageToUser(String user, XFile image) {
+    return firebaseStorageModule.uploadImageToUser(user, image);
   }
 }
