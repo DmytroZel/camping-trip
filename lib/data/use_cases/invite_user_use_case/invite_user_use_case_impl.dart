@@ -40,17 +40,17 @@ class InviteUserUseCaseImpl extends InviteUserUseCase {
         ? InviteUserModel.fromRepo(inviteUserModelRepo)
         : null;
     if (inviteUserModel != null) {
-      return _inviteRepo.addOrUpdate(inviteUserModel.copyWith(
+      return _inviteRepo.addOrUpdate(InviteUserModelRepo.fromModel(inviteUserModel.copyWith(
           isAccepted: false,
           isRequested: isRequest,
-          createdAt: DateTime.now()));
+          createdAt: DateTime.now())));
     }
     final model = InviteUserModel(
         userId: userId,
         tripId: tripId,
         isAccepted: false,
         isRequested: isRequest,
-        id: Uuid().v4(),
+        id: const Uuid().v4(),
         createdAt: DateTime.now(),
         userName: userName,
         tripName: tripName);

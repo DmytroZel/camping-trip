@@ -9,4 +9,5 @@ class ScreenNames {
   static const String account = '/account';
   static const String membersList = '/membersList';
   static const String userList = '/userList';
+  static const String tripSettings = '/tripSettings';
 }

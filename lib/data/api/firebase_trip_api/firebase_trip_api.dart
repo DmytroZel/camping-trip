@@ -14,4 +14,5 @@ abstract class FirebaseTripApi {
   Future<void> deleteDishItem(String dishItemId, String tripId);
   Future<void> addOrUpdateDishItem(
       FirebaseDishModel dishItemModel, String tripId);
+  Future<void> deleteMember(String member, String tripId);
 }

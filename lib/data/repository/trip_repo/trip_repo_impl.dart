@@ -68,4 +68,9 @@ class TripRepoImpl extends TripRepo {
     return tripApi.getMember(tripId).map(
         (event) => event.map((e) => MemberModelRepo.fromFirebase(e)).toList());
   }
+
+  @override
+  Future<void> deleteMember(String member, String tripId) {
+    return tripApi.deleteMember(member, tripId);
+  }
 }

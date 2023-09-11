@@ -88,4 +88,9 @@ class FirebaseTripApiImpl extends FirebaseTripApi {
                 (member) => FirebaseMemberModel.fromJson(member.data()))
             .toList());
   }
+
+  @override
+  Future<void> deleteMember(String member, String tripId) {
+    return trips.doc(tripId).collection('members').doc(member).delete();
+  }
 }

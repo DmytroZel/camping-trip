@@ -8,6 +8,8 @@ import 'package:camp_trip/feature/login/login_vm.dart';
 import 'package:camp_trip/feature/login/register/register_view.dart';
 import 'package:camp_trip/feature/main/main_page.dart';
 import 'package:camp_trip/feature/main/main_vm.dart';
+import 'package:camp_trip/feature/trip/settings/trip_settings.dart';
+import 'package:camp_trip/feature/trip/settings/trip_settings_vm.dart';
 import 'package:camp_trip/feature/trip/trip_vm.dart';
 import 'package:camp_trip/feature/user_list/user_list_view.dart';
 import 'package:camp_trip/routers/screen_names.dart';
@@ -147,6 +149,21 @@ class AppRouters {
           child: ChangeNotifierProvider(
             create: (context) => serviceLocator<AccountVM>(),
             child: const AccountView(),
+          ),
+        );
+      },
+    ),
+    GoRoute(
+      name: ScreenNames.tripSettings,
+      path: ScreenNames.tripSettings,
+      pageBuilder: (context, state) {
+        return _buildPageWithDefaultTransition(
+          context: context,
+          state: state,
+          child: ChangeNotifierProvider(
+            create: (context) =>
+                serviceLocator<TripSettingsVM>(param1: state.extra),
+            child: const TripSettings(),
           ),
         );
       },

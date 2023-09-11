@@ -26,7 +26,7 @@ class TripUseCaseImpl extends TripUseCase {
     await tripRepo.addOrUpdateMember(
         MemberModel(
             role: MemberModel.admin,
-            userId: tripModel.id,
+            userId: user.id,
             userName: user.userName),
         tripModel.id);
   }
@@ -71,5 +71,12 @@ class TripUseCaseImpl extends TripUseCase {
     return tripRepo
         .getMember(tripId)
         .map((event) => event.map((e) => MemberModel.fromRepo(e)).toList());
+  }
+
+  @override
+  Future<void> deleteMember(String member, TripModel trip) async {
+    trip.members.remove(member);
+    await tripRepo.addOrUpdate(TripModelRepo.fromModel(trip));
+    return tripRepo.deleteMember(member, trip.id);
   }
 }

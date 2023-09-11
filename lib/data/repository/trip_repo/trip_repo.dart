@@ -6,6 +6,7 @@ import '../../../domain/model/repository/trip_model_repo.dart';
 abstract class TripRepo {
   Future<void> addOrUpdate(TripModelRepo tripModel);
   Future<void> deleteTrip(String tripId);
+  Future<void> deleteMember(String member, String tripId);
   Stream<List<TripModelRepo>> getTrips();
   Stream<TripModelRepo> getTrip(String id);
   Stream<List<MemberModelRepo>> getMember(String tripId);

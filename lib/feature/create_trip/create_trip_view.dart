@@ -30,105 +30,11 @@ class _CreateTrioViewState extends BaseState<CreateTrioView> {
       body: AppCard(
         child: Column(
           children: [
-            TextField(
-              onChanged: vm.onChangedName,
-              decoration: const InputDecoration(
-                hintText: "Name",
-              ),
-            ),
+            _name(),
             const SizedBox(
               height: 20,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      //start date label
-                      const Text("Start date"),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      //start date field
-                      InkWell(
-                        onTap: _onPickStartDate,
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 16, horizontal: 8),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Row(
-                            children: [
-                              const Icon(Icons.calendar_today),
-                              const SizedBox(
-                                width: 8,
-                              ),
-                              Text(
-                                vm.startDate.toString(),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  width: 20,
-                ),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      //end date label
-                      const Text("End date"),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      //end date field
-                      InkWell(
-                        onTap: _onPickEndDate,
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 16, horizontal: 8),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Row(
-                            children: [
-                              const Icon(Icons.calendar_today),
-                              const SizedBox(
-                                width: 8,
-                              ),
-                              Text(
-                                vm.endDate.toString(),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            //period label
-            Row(
-              children: [
-                Text("${vm.period} days"),
-              ],
-            ),
+            _date(),
           ],
         ),
       ),
@@ -141,6 +47,111 @@ class _CreateTrioViewState extends BaseState<CreateTrioView> {
             ? const CircularProgressIndicator()
             : const Icon(Icons.check),
       ),
+    );
+  }
+
+  Widget _name() {
+    final vm = Provider.of<CreateTripVm>(context);
+    return TextField(
+      onChanged: vm.onChangedName,
+      decoration: const InputDecoration(
+        hintText: "Name",
+      ),
+    );
+  }
+
+  Widget _date() {
+    final vm = Provider.of<CreateTripVm>(context);
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  //start date label
+                  const Text("Start date"),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  //start date field
+                  InkWell(
+                    onTap: _onPickStartDate,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 16, horizontal: 8),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Row(
+                        children: [
+                          const Icon(Icons.calendar_today),
+                          const SizedBox(
+                            width: 8,
+                          ),
+                          Text(
+                            vm.startDate.toString(),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(
+              width: 20,
+            ),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  //end date label
+                  const Text("End date"),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  //end date field
+                  InkWell(
+                    onTap: _onPickEndDate,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 16, horizontal: 8),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Row(
+                        children: [
+                          const Icon(Icons.calendar_today),
+                          const SizedBox(
+                            width: 8,
+                          ),
+                          Text(
+                            vm.endDate.toString(),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        //period label
+        Row(
+          children: [
+            Text("${vm.period} days"),
+          ],
+        )
+      ],
     );
   }
 

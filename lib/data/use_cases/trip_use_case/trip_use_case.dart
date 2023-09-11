@@ -5,6 +5,7 @@ import '../../../domain/model/model/dish_model.dart';
 abstract class TripUseCase {
   Future<void> addOrUpdate(TripModel tripModel);
   Future<void> deleteTrip(String tripId);
+  Future<void> deleteMember(String member, TripModel trip);
   Stream<List<TripModel>> getTrips();
   Stream<List<MemberModel>> getMember(String tripId);
   Stream<TripModel> getTrip(String id);

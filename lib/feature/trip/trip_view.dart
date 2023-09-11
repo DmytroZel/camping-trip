@@ -2,7 +2,7 @@ import 'package:camp_trip/common/base/base_state.dart';
 import 'package:camp_trip/domain/model/model/ingridient_model.dart';
 import 'package:camp_trip/feature/trip/trip_vm.dart';
 import 'package:camp_trip/feature/trip/widget/dish_widget.dart';
-import 'package:camp_trip/feature/trip/widget/trip_settings.dart';
+import 'package:camp_trip/feature/trip/settings/trip_settings.dart';
 import 'package:camp_trip/routers/screen_names.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -22,9 +22,6 @@ class _TripViewState extends BaseState<TripView> {
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<TripVM>(context);
-    if (vm.showSettings) {
-      return TripSettings(vm: vm);
-    }
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.lightGreen,
@@ -32,7 +29,7 @@ class _TripViewState extends BaseState<TripView> {
         actions: [
           IconButton(
               onPressed: () {
-                vm.onShowSettings();
+                context.push(ScreenNames.tripSettings, extra: vm.trip?.id);
               },
               icon: const Icon(Icons.settings)),
         ],

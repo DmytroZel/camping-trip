@@ -29,7 +29,7 @@ import 'data/api/invite_api/invite_api.dart' as _i18;
 import 'data/api/invite_api/invite_api_impl.dart' as _i19;
 import 'data/api/user_api/firebase_user_api.dart' as _i10;
 import 'data/api/user_api/firebase_user_api_impl.dart' as _i11;
-import 'data/di/dependency_module.dart' as _i57;
+import 'data/di/dependency_module.dart' as _i58;
 import 'data/firebase_storage/firebase_storage_module.dart' as _i6;
 import 'data/firebase_storage/firebase_storage_module_impl.dart' as _i7;
 import 'data/repository/auth_repository/auth_repo.dart' as _i38;
@@ -62,7 +62,7 @@ import 'data/use_cases/trip_use_case/trip_use_case.dart' as _i47;
 import 'data/use_cases/trip_use_case/trip_use_case_impl.dart' as _i48;
 import 'data/use_cases/user_use_case/user_use_case.dart' as _i36;
 import 'data/use_cases/user_use_case/user_use_case_impl.dart' as _i37;
-import 'feature/account/account_vm.dart' as _i56;
+import 'feature/account/account_vm.dart' as _i57;
 import 'feature/create_trip/create_trip_vm.dart' as _i51;
 import 'feature/ingredients/add_ingredients/add_ingredients_vm.dart' as _i23;
 import 'feature/initial/initila_vm.dart' as _i42;
@@ -70,7 +70,8 @@ import 'feature/login/login_vm.dart' as _i43;
 import 'feature/login/register/register_vm.dart' as _i44;
 import 'feature/main/main_vm.dart' as _i54;
 import 'feature/trip/add_dish_model_botom_sheet/add_dish_vm.dart' as _i50;
-import 'feature/trip/trip_vm.dart' as _i55;
+import 'feature/trip/settings/trip_settings_vm.dart' as _i55;
+import 'feature/trip/trip_vm.dart' as _i56;
 import 'feature/user_list/user_list_vm.dart' as _i49;
 
 // ignore_for_file: unnecessary_lambdas
@@ -166,21 +167,31 @@ Future<_i1.GetIt> $initGetIt(
         gh<_i36.UserUseCase>(),
         gh<_i47.TripUseCase>(),
       ));
-  gh.factoryParam<_i55.TripVM, String, dynamic>((
+  gh.factoryParam<_i55.TripSettingsVM, String, dynamic>((
+    tripId,
+    _,
+  ) =>
+      _i55.TripSettingsVM(
+        gh<_i47.TripUseCase>(),
+        gh<_i52.InviteUserUseCase>(),
+        gh<_i36.UserUseCase>(),
+        tripId: tripId,
+      ));
+  gh.factoryParam<_i56.TripVM, String, dynamic>((
     id,
     _,
   ) =>
-      _i55.TripVM(
+      _i56.TripVM(
         gh<_i47.TripUseCase>(),
         id,
         gh<_i36.UserUseCase>(),
         gh<_i52.InviteUserUseCase>(),
       ));
-  gh.factory<_i56.AccountVM>(() => _i56.AccountVM(
+  gh.factory<_i57.AccountVM>(() => _i57.AccountVM(
         gh<_i36.UserUseCase>(),
         gh<_i52.InviteUserUseCase>(),
       ));
   return getIt;
 }
 
-class _$DependencyModule extends _i57.DependencyModule {}
+class _$DependencyModule extends _i58.DependencyModule {}
