@@ -1,4 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:camp_trip/common/widget/app_card.dart';
 import 'package:camp_trip/feature/account/widget/invite_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -32,61 +32,50 @@ class _AccountViewState extends BaseState<AccountView> {
       appBar: AppBar(
         title: const Text('Account'),
       ),
-      body: Container(
-        color: Colors.grey[200],
-        width: MediaQuery.of(context).size.width,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-          child: Card(
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  InkWell(
-                      splashColor: Colors.red, // Splash color
-                      onTap: () {
-                        _onPickPhoto();
-                      },
-                      child: _buildAvatar(vm.getImage())),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  _nameInput(),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  _emailLabel(),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  _genderWidget(),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    'Invites',
-                    style: Theme.of(context).textTheme.headline6,
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  InviteList(
-                    invites: vm.invites,
-                    onAccept: vm.onAccept,
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                ],
-              ),
+      body: AppCard(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const SizedBox(
+              height: 20,
             ),
-          ),
+            InkWell(
+                splashColor: Colors.red, // Splash color
+                onTap: () {
+                  _onPickPhoto();
+                },
+                child: _buildAvatar(vm.getImage())),
+            const SizedBox(
+              height: 20,
+            ),
+            _nameInput(),
+            const SizedBox(
+              height: 20,
+            ),
+            _emailLabel(),
+            const SizedBox(
+              height: 20,
+            ),
+            _genderWidget(),
+            const SizedBox(
+              height: 20,
+            ),
+            Text(
+              'Invites',
+              style: Theme.of(context).textTheme.headline6,
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            InviteList(
+              invites: vm.invites,
+              onAccept: vm.onAccept,
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+          ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
@@ -96,7 +85,9 @@ class _AccountViewState extends BaseState<AccountView> {
           }
           vm.onSave();
         },
-        child: vm.isProgress ? const CircularProgressIndicator() : const Icon(Icons.save),
+        child: vm.isProgress
+            ? const CircularProgressIndicator()
+            : const Icon(Icons.save),
       ),
     );
   }

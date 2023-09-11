@@ -5,6 +5,8 @@ class TripModel {
   String name;
   String period;
   String organizer;
+  DateTime startDate;
+  DateTime endDate;
   List<String> members = [];
 
   TripModel({
@@ -13,6 +15,8 @@ class TripModel {
     required this.period,
     required this.organizer,
     required this.members,
+    required this.startDate,
+    required this.endDate,
   });
 
   TripModel.fromRepo(TripModelRepo r)
@@ -20,7 +24,29 @@ class TripModel {
         name = r.name,
         period = r.period,
         organizer = r.organizer,
-        members = r.members;
+        members = r.members,
+        startDate = r.startDate,
+        endDate = r.endDate;
+
+  copyWith({
+    String? id,
+    String? name,
+    String? period,
+    String? organizer,
+    List<String>? members,
+    DateTime? startDate,
+    DateTime? endDate,
+  }) {
+    return TripModel(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      period: period ?? this.period,
+      organizer: organizer ?? this.organizer,
+      members: members ?? this.members,
+      startDate: startDate ?? this.startDate,
+      endDate: endDate ?? this.endDate,
+    );
+  }
 }
 
 class MemberModel {

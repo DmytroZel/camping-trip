@@ -12,6 +12,7 @@ class CreateTripVm extends BaseVM {
   final UserUseCase userUseCase;
 
   CreateTripVm(this.tripUseCase, this.userUseCase) {
+    onChangedPeriod();
     getMe();
   }
 
@@ -20,15 +21,22 @@ class CreateTripVm extends BaseVM {
   int period = 1;
   String? organizer;
   List<String>? members;
+  DateTime startDate = DateTime.now();
+  DateTime endDate = DateTime.now().copyWith(day: DateTime.now().day + 1);
 
   Future<void> createTrip() async {
+    showProgress();
     final trip = TripModel(
-        id: Uuid().v4(),
+        id: const Uuid().v4(),
         name: name!,
         period: period.toString(),
         organizer: myId!,
-        members: []);
+        members: [myId!],
+        startDate: startDate,
+        endDate: endDate);
     await tripUseCase.addOrUpdate(trip);
+    hideProgress();
+    goBack();
   }
 
   Future<void> getMe() async {
@@ -40,11 +48,19 @@ class CreateTripVm extends BaseVM {
     name = value;
   }
 
-  onChangedPeriod(bool value) {
-    if (period == 1 && value == false) {
-      return;
-    }
-    period = value ? period += 1 : period -= 1;
+  onChangedPeriod() {
+    period = endDate.difference(startDate).inDays;
+  }
+
+  onChangedStartDate(DateTime value) {
+    startDate = value;
+    onChangedPeriod();
+    notifyListeners();
+  }
+
+  onChangedEndDate(DateTime value) {
+    endDate = value;
+    onChangedPeriod();
     notifyListeners();
   }
 }

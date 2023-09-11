@@ -1,4 +1,5 @@
 import 'package:camp_trip/data/repository/trip_repo/trip_repo.dart';
+import 'package:camp_trip/data/repository/user_repo/user_repo.dart';
 import 'package:camp_trip/data/use_cases/trip_use_case/trip_use_case.dart';
 import 'package:camp_trip/domain/model/model/dish_model.dart';
 import 'package:camp_trip/domain/model/repository/trip_model_repo.dart';
@@ -10,11 +11,24 @@ import '../../../domain/model/repository/dish_model_repo.dart';
 @Injectable(as: TripUseCase)
 class TripUseCaseImpl extends TripUseCase {
   final TripRepo tripRepo;
+  final UserRepo userRepo;
 
-  TripUseCaseImpl(this.tripRepo);
+  TripUseCaseImpl(this.tripRepo, this.userRepo);
+
   @override
-  Future<void> addOrUpdate(TripModel tripModel) {
-    return tripRepo.addOrUpdate(TripModelRepo.fromModel(tripModel));
+  Future<void> addOrUpdate(TripModel tripModel) async {
+    final isNeedToAddAdmin = tripModel.members.isEmpty;
+    if (isNeedToAddAdmin) {
+      tripModel = tripModel.copyWith(members: [tripModel.organizer]);
+    }
+    await tripRepo.addOrUpdate(TripModelRepo.fromModel(tripModel));
+    final user = await userRepo.getUser(tripModel.organizer);
+    await tripRepo.addOrUpdateMember(
+        MemberModel(
+            role: MemberModel.admin,
+            userId: tripModel.id,
+            userName: user.userName),
+        tripModel.id);
   }
 
   @override

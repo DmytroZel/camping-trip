@@ -144,7 +144,10 @@ Future<_i1.GetIt> $initGetIt(
         gh<_i8.FirebaseTripApi>(),
         gh<_i38.AuthRepo>(),
       ));
-  gh.factory<_i47.TripUseCase>(() => _i48.TripUseCaseImpl(gh<_i45.TripRepo>()));
+  gh.factory<_i47.TripUseCase>(() => _i48.TripUseCaseImpl(
+        gh<_i45.TripRepo>(),
+        gh<_i34.UserRepo>(),
+      ));
   gh.factory<_i49.UserListVm>(() => _i49.UserListVm(gh<_i36.UserUseCase>()));
   gh.factory<_i50.AddDishVM>(() => _i50.AddDishVM(
         gh<_i30.DishUseCase>(),

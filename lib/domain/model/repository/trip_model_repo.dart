@@ -7,6 +7,8 @@ class TripModelRepo {
   String name;
   String period;
   String organizer;
+  DateTime startDate;
+  DateTime endDate;
   List<String> members = [];
 
   TripModelRepo({
@@ -15,6 +17,8 @@ class TripModelRepo {
     required this.period,
     required this.organizer,
     required this.members,
+    required this.startDate,
+    required this.endDate,
   });
 
   TripModelRepo.fromFirebase(FirebaseTripModel r)
@@ -22,14 +26,18 @@ class TripModelRepo {
         name = r.name,
         period = r.period,
         organizer = r.organizer,
-        members = r.members;
+        members = r.members,
+        startDate = r.startDate,
+        endDate = r.endDate;
 
   TripModelRepo.fromModel(TripModel r)
       : id = r.id,
         name = r.name,
         period = r.period,
         organizer = r.organizer,
-        members = r.members;
+        members = r.members,
+        startDate = r.startDate,
+        endDate = r.endDate;
 }
 
 class MemberModelRepo {
