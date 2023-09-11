@@ -61,7 +61,8 @@ class _TripViewState extends BaseState<TripView> {
                       onPressed: () {
                         showAddDishModal(day);
                       },
-                      icon: const Icon(Icons.add)),
+                      icon: const Icon(Icons.add)
+                  ),
                 ],
               ),
             ],
@@ -92,15 +93,10 @@ class _TripViewState extends BaseState<TripView> {
   showAddDishModal(int day) {
     final vm = Provider.of<TripVM>(context, listen: false);
     showDialog(
-      useRootNavigator: true,
       context: context,
-      builder: (context) => Padding(
-        padding:
-            EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-        child: AddDishView(
-          tripId: vm.trip?.id ?? '',
-          day: day,
-        ),
+      builder: (context) => AddDishView(
+        tripId: vm.trip?.id ?? '',
+        day: day,
       ),
     );
   }

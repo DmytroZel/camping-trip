@@ -14,6 +14,14 @@ class AddDishVM extends BaseVM {
 
   String? dishName;
   DishPeriod? dishPeriod;
+  DishType? dishType;
+  List<DishType> dishesTypes = [
+    DishType(0, 'Soup'),
+    DishType(1, 'Dry food'),
+    DishType(2, 'Porridge'),
+    DishType(3, 'Snack'),
+
+  ];
   List<DishPeriod> dishPeriods = [
     DishPeriod(0, 'Breakfast'),
     DishPeriod(1, 'Lunch'),
@@ -32,8 +40,8 @@ class AddDishVM extends BaseVM {
     notifyListeners();
   }
 
-  onChangeDishPeriod(DishPeriod value) {
-    dishPeriod = value;
+  dishTypeChanged(DishType? value) {
+    dishType = value;
     notifyListeners();
   }
 
@@ -59,4 +67,11 @@ class DishPeriod {
   final String name;
 
   DishPeriod(this.period, this.name);
+}
+
+class DishType {
+  final int type;
+  final String name;
+
+  DishType(this.type, this.name);
 }
