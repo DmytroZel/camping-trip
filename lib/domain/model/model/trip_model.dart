@@ -57,4 +57,23 @@ class MemberModel {
       userId: userId ?? this.userId,
     );
   }
+
+  getRoleString() {
+    switch (role) {
+      case member:
+        return 'Member';
+      case admin:
+        return 'Admin';
+      case cook:
+        return 'Cook';
+      case equipment:
+        return 'Equipment';
+      case deputy:
+        return 'Deputy';
+      case medic:
+        return 'Medic';
+      default:
+        return '';
+    }
+  }
 }

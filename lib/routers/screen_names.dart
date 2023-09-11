@@ -8,4 +8,5 @@ class ScreenNames {
   static const String register = '/register';
   static const String account = '/account';
   static const String membersList = '/membersList';
+  static const String userList = '/userList';
 }

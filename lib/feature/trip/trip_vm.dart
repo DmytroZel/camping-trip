@@ -21,7 +21,6 @@ class TripVM extends BaseVM {
   String? newName;
   int period = 1;
   List<UserModel> users = [];
-  bool showUserList = false;
   List<MemberModel> members = [];
   List<String> membersIds = [];
   StreamSubscription? _subForUsersSubscription;
@@ -39,12 +38,6 @@ class TripVM extends BaseVM {
     }).toBag(bag);
   }
 
-  onShowUserList() {
-    showUserList = !showUserList;
-    _subForUsers();
-    notifyListeners();
-  }
-
   onUserSelected(UserModel userModel) {
     _inviteUserUseCase.addOrUpdate(
         userId: userModel.id,
@@ -57,22 +50,6 @@ class TripVM extends BaseVM {
 
   _onMembersChanged(List<MemberModel> event) {
     members = event;
-    notifyListeners();
-  }
-
-  onSubForUsers() {
-    _subForUsers();
-  }
-
-  _subForUsers() {
-    _subForUsersSubscription?.cancel();
-    _subForUsersSubscription = _userUseCase.getUsers().listen((event) {
-      _onUsersChanged(event);
-    }).toBag(bag);
-  }
-
-  _onUsersChanged(List<UserModel> event) {
-    users = event;
     notifyListeners();
   }
 

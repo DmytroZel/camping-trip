@@ -9,6 +9,7 @@ import 'package:camp_trip/feature/login/register/register_view.dart';
 import 'package:camp_trip/feature/main/main_page.dart';
 import 'package:camp_trip/feature/main/main_vm.dart';
 import 'package:camp_trip/feature/trip/trip_vm.dart';
+import 'package:camp_trip/feature/user_list/user_list_view.dart';
 import 'package:camp_trip/routers/screen_names.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -19,6 +20,7 @@ import '../feature/initial/initial_page.dart';
 import '../feature/initial/initila_vm.dart';
 import '../feature/login/register/register_vm.dart';
 import '../feature/trip/trip_view.dart';
+import '../feature/user_list/user_list_vm.dart';
 import '../main.dart';
 
 class AppRouters {
@@ -47,6 +49,20 @@ class AppRouters {
           child: ChangeNotifierProvider(
             create: (context) => serviceLocator<RegisterVM>(),
             child: const RegisterView(),
+          ),
+        );
+      },
+    ),
+    GoRoute(
+      name: ScreenNames.userList,
+      path: ScreenNames.userList,
+      pageBuilder: (context, state) {
+        return _buildPageWithDefaultTransition(
+          context: context,
+          state: state,
+          child: ChangeNotifierProvider(
+            create: (context) => serviceLocator<UserListVm>(),
+            child: const UserListView(),
           ),
         );
       },

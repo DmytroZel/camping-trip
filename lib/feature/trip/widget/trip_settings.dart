@@ -1,7 +1,10 @@
-import 'package:camp_trip/feature/trip/widget/user_list.dart';
+import 'package:camp_trip/domain/model/model/user_model.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../../routers/screen_names.dart';
 import '../trip_vm.dart';
+import 'chage_role.dart';
 
 class TripSettings extends StatefulWidget {
   final TripVM vm;
@@ -32,73 +35,101 @@ class _TripSettingsState extends State<TripSettings> {
               icon: const Icon(Icons.check)),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          widget.vm.onShowUserList();
-        },
-        child: const Icon(Icons.add),
-      ),
       body: ListView(
         shrinkWrap: true,
         children: [
-          TextField(
-            onChanged: widget.vm.onChangedName,
-            decoration: const InputDecoration(
-              hintText: "Name",
-            ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Column(children: [
+              TextField(
+                onChanged: widget.vm.onChangedName,
+                decoration: const InputDecoration(
+                  hintText: "Name",
+                ),
+              ),
+              Row(
+                children: [
+                  IconButton(
+                      onPressed: () {
+                        widget.vm.onChangedPeriod(false);
+                      },
+                      icon: const Icon(Icons.arrow_left)),
+                  Text(widget.vm.period.toString()),
+                  IconButton(
+                      onPressed: () {
+                        widget.vm.onChangedPeriod(true);
+                      },
+                      icon: const Icon(Icons.arrow_right))
+                ],
+              ),
+              const Divider(),
+              const Text("Members"),
+              ExpansionTile(
+                title: const Text("Members"),
+                children: [
+                  ListView.builder(
+                    itemBuilder: (context, index) {
+                      final user = widget.vm.members[index];
+                      return Row(
+                        children: [
+                          Expanded(
+                            child: GestureDetector(
+                                onTap: () {
+                                  _showChangeRoleDialog(user.role);
+                                },
+                                child: Text(user.userName)),
+                          ),
+                          IconButton(
+                              onPressed: () {
+                                // widget.vm.onRemoveMember(user);
+                              },
+                              icon: const Icon(
+                                Icons.remove_circle,
+                                color: Colors.red,
+                              )),
+                        ],
+                      );
+                    },
+                    itemCount: widget.vm.members.length,
+                    shrinkWrap: true,
+                  ),
+                  GestureDetector(
+                      onTap: () {
+                        onInviteTap();
+                      },
+                      child: const Padding(
+                        padding: EdgeInsets.all(16.0),
+                        child: Text(
+                          "Invite new members",
+                          style: TextStyle(color: Colors.blue),
+                        ),
+                      )),
+                ],
+              ),
+            ]),
           ),
-          Row(
-            children: [
-              IconButton(
-                  onPressed: () {
-                    widget.vm.onChangedPeriod(false);
-                  },
-                  icon: const Icon(Icons.arrow_left)),
-              Text(widget.vm.period.toString()),
-              IconButton(
-                  onPressed: () {
-                    widget.vm.onChangedPeriod(true);
-                  },
-                  icon: const Icon(Icons.arrow_right))
-            ],
-          ),
-          const Divider(),
-          const Text("Members"),
-          GridView(
-            shrinkWrap: true,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3),
-            children: widget.vm.members
-                .map((e) => Column(
-                      children: [
-                        Text(e.userName),
-                        Text(e.role.toString()),
-                        IconButton(
-                            onPressed: () {
-                              //TODO
-                              // widget.vm.onChangedRole(e);
-                            },
-                            icon: const Icon(Icons.arrow_left)),
-                        IconButton(
-                            onPressed: () {
-                              //TODO
-                              // widget.vm.onChangedRole(e);
-                            },
-                            icon: const Icon(Icons.arrow_right))
-                      ],
-                    ))
-                .toList(),
-          ),
-          widget.vm.showUserList
-              ? UserList(
-                  users: widget.vm.users,
-                  onUserSelected: (user) {
-                    widget.vm.onUserSelected(user);
-                  },
-                )
-              : const SizedBox.shrink(),
         ],
       ),
     );
+  }
+
+  _showChangeRoleDialog(int selectedRole) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return ChangeRole(
+            selectedRole: selectedRole,
+            onRoleChanged: (role) {
+              print(role);
+            },
+          );
+        });
+  }
+
+  onInviteTap() async {
+    final UserModel? inviteUser = await context.push(ScreenNames.userList);
+    if (inviteUser is UserModel) {
+      widget.vm.onUserSelected(inviteUser);
+    }
   }
 }

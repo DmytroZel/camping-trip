@@ -34,10 +34,11 @@ class InviteUserUseCaseImpl extends InviteUserUseCase {
       required String tripName,
       required String tripId,
       required bool isRequest}) async {
-    final InviteUserModel? inviteUserModel = await _inviteRepo
-        .getInvite(userId, tripId)
-        .then(
-            (value) => value == null ? null : InviteUserModel.fromRepo(value));
+    final inviteUserModelRepo = await _inviteRepo
+        .getInvite(userId, tripId);
+    final inviteUserModel = inviteUserModelRepo != null
+        ? InviteUserModel.fromRepo(inviteUserModelRepo)
+        : null;
     if (inviteUserModel != null) {
       return _inviteRepo.addOrUpdate(inviteUserModel.copyWith(
           isAccepted: false,

@@ -1,5 +1,6 @@
 import 'package:camp_trip/feature/trip/add_dish_model_botom_sheet/widget/body.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../main.dart';
@@ -19,9 +20,11 @@ class _AddDishViewState extends State<AddDishView> {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
         create: (context) => serviceLocator<AddDishVM>(),
-        child: Body(
-          tripId: widget.tripId,
-          day: widget.day,
+        child: AlertDialog(
+          content: Body(
+            tripId: widget.tripId,
+            day: widget.day,
+          ),
         ));
   }
 }

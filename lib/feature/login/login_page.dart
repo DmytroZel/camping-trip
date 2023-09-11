@@ -158,54 +158,47 @@ class _LoginPageState extends BaseState<LoginPage> {
                                   fit: BoxFit.fitWidth,
                                 ),
                               ),
-                            Container(
-                              constraints: BoxConstraints(
-                                  minWidth:
-                                      MediaQuery.of(context).size.width * 0.3,
-                                  maxWidth:
-                                      MediaQuery.of(context).size.width * 0.4),
-                              child: TextField(
-                                focusNode: _focusEmail,
-                                onTap: lookOnTheTextField,
-                                controller: _emailController,
-                                decoration: InputDecoration(
-                                    filled: true,
-                                    fillColor:
-                                        Colors.lightBlue.withOpacity(0.8),
-                                    disabledBorder: const OutlineInputBorder(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(10)),
-                                      borderSide: BorderSide(
-                                          color: Colors.transparent, width: 0),
-                                    ),
-                                    enabledBorder: const OutlineInputBorder(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(10)),
-                                      borderSide: BorderSide(
-                                          color: Colors.transparent, width: 0),
-                                    ),
-                                    focusedBorder: const OutlineInputBorder(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(10)),
-                                      borderSide: BorderSide(
-                                          color: Colors.transparent, width: 0),
-                                    ),
-                                    border: const OutlineInputBorder(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(10)),
-                                      borderSide: BorderSide(
-                                          color: Colors.transparent, width: 0),
-                                    ),
-                                    labelText: 'Email',
-                                    labelStyle:
-                                        const TextStyle(color: Colors.white),
-                                    hintStyle:
-                                        const TextStyle(color: Colors.white),
-                                    helperStyle:
-                                        const TextStyle(color: Colors.white),
-                                    hintText: 'Enter your email address'),
-                                onChanged: moveEyeBalls,
-                              ),
+                            TextField(
+                              focusNode: _focusEmail,
+                              onTap: lookOnTheTextField,
+                              controller: _emailController,
+                              decoration: InputDecoration(
+                                  filled: true,
+                                  fillColor:
+                                      Colors.lightBlue.withOpacity(0.8),
+                                  disabledBorder: const OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10)),
+                                    borderSide: BorderSide(
+                                        color: Colors.transparent, width: 0),
+                                  ),
+                                  enabledBorder: const OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10)),
+                                    borderSide: BorderSide(
+                                        color: Colors.transparent, width: 0),
+                                  ),
+                                  focusedBorder: const OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10)),
+                                    borderSide: BorderSide(
+                                        color: Colors.transparent, width: 0),
+                                  ),
+                                  border: const OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10)),
+                                    borderSide: BorderSide(
+                                        color: Colors.transparent, width: 0),
+                                  ),
+                                  labelText: 'Email',
+                                  labelStyle:
+                                      const TextStyle(color: Colors.white),
+                                  hintStyle:
+                                      const TextStyle(color: Colors.white),
+                                  helperStyle:
+                                      const TextStyle(color: Colors.white),
+                                  hintText: 'Enter your email address'),
+                              onChanged: moveEyeBalls,
                             ),
                             Visibility(
                               visible: vm.showRegisterPage,
@@ -239,60 +232,53 @@ class _LoginPageState extends BaseState<LoginPage> {
                             const SizedBox(
                               height: 20,
                             ),
-                            Container(
-                              constraints: BoxConstraints(
-                                  minWidth:
-                                      MediaQuery.of(context).size.width * 0.3,
-                                  maxWidth:
-                                      MediaQuery.of(context).size.width * 0.4),
-                              child: TextField(
-                                focusNode: _focusPass,
-                                controller: _passwordController,
-                                obscureText: vm.showPassword,
-                                onTap: handsOnTheEyes,
-                                decoration: InputDecoration(
-                                    filled: true,
-                                    fillColor:
-                                        Colors.lightBlue.withOpacity(0.8),
-                                    disabledBorder: const OutlineInputBorder(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(10)),
-                                      borderSide: BorderSide(
-                                          color: Colors.transparent, width: 0),
-                                    ),
-                                    enabledBorder: const OutlineInputBorder(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(10)),
-                                      borderSide: BorderSide(
-                                          color: Colors.transparent, width: 0),
-                                    ),
-                                    focusedBorder: const OutlineInputBorder(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(10)),
-                                      borderSide: BorderSide(
-                                          color: Colors.transparent, width: 0),
-                                    ),
-                                    border: const OutlineInputBorder(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(10)),
-                                      borderSide: BorderSide(
-                                          color: Colors.transparent, width: 0),
-                                    ),
-                                    hintStyle:
-                                        const TextStyle(color: Colors.white),
-                                    labelStyle:
-                                        const TextStyle(color: Colors.white),
-                                    labelText: 'Password',
-                                    hintText: 'Enter your secure password',
-                                    suffixIcon: GestureDetector(
-                                        onTap: () {
-                                          vm.onShowPasswordTap();
-                                        },
-                                        child: Icon(vm.showPassword
-                                            ? Icons.visibility
-                                            : Icons.visibility_off))),
-                                onChanged: vm.onPasswordChanged,
-                              ),
+                            TextField(
+                              focusNode: _focusPass,
+                              controller: _passwordController,
+                              obscureText: vm.showPassword,
+                              onTap: handsOnTheEyes,
+                              decoration: InputDecoration(
+                                  filled: true,
+                                  fillColor:
+                                      Colors.lightBlue.withOpacity(0.8),
+                                  disabledBorder: const OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10)),
+                                    borderSide: BorderSide(
+                                        color: Colors.transparent, width: 0),
+                                  ),
+                                  enabledBorder: const OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10)),
+                                    borderSide: BorderSide(
+                                        color: Colors.transparent, width: 0),
+                                  ),
+                                  focusedBorder: const OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10)),
+                                    borderSide: BorderSide(
+                                        color: Colors.transparent, width: 0),
+                                  ),
+                                  border: const OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10)),
+                                    borderSide: BorderSide(
+                                        color: Colors.transparent, width: 0),
+                                  ),
+                                  hintStyle:
+                                      const TextStyle(color: Colors.white),
+                                  labelStyle:
+                                      const TextStyle(color: Colors.white),
+                                  labelText: 'Password',
+                                  hintText: 'Enter your secure password',
+                                  suffixIcon: GestureDetector(
+                                      onTap: () {
+                                        vm.onShowPasswordTap();
+                                      },
+                                      child: Icon(vm.showPassword
+                                          ? Icons.visibility
+                                          : Icons.visibility_off))),
+                              onChanged: vm.onPasswordChanged,
                             ),
                             Visibility(
                               visible: vm.showRegisterPage,

@@ -31,12 +31,15 @@ class InviteApiImpl extends InviteApi {
   }
 
   @override
-  Future<FirebaseInviteUserModel?> getInvite(String userId, String tripId) {
-    return invites
-        .where('userId', isEqualTo: userId)
-        .where('tripId', isEqualTo: tripId)
-        .get()
-        .then((value) =>
-            FirebaseInviteUserModel.fromJson(value.docs.first.data()));
+  Future<FirebaseInviteUserModel?> getInvite(String userId, String tripId) async {
+   try {
+      final invite = await invites
+          .where('userId', isEqualTo: userId)
+          .where('tripId', isEqualTo: tripId)
+          .get();
+      return FirebaseInviteUserModel.fromJson(invite.docs.first.data());
+    } catch (e) {
+      return null;
+    }
   }
 }

@@ -6,7 +6,6 @@ import 'package:camp_trip/feature/trip/widget/trip_settings.dart';
 import 'package:camp_trip/routers/screen_names.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 
 import '../../domain/model/model/dish_model.dart';
@@ -92,7 +91,7 @@ class _TripViewState extends BaseState<TripView> {
 
   showAddDishModal(int day) {
     final vm = Provider.of<TripVM>(context, listen: false);
-    showMaterialModalBottomSheet(
+    showDialog(
       useRootNavigator: true,
       context: context,
       builder: (context) => Padding(

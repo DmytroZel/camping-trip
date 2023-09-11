@@ -17,37 +17,42 @@ class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<AddDishVM>(context);
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Text('Add dish'),
-          const SizedBox(
-            height: 20,
-          ),
-          Row(
-            children: [
-              Expanded(
-                  child: TextField(
-                onChanged: vm.onNameChanged,
-              )),
-              _dishDropDownList(),
-            ],
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          MaterialButton(
-            onPressed: () {
-              vm.addOrUpdateDish(widget.tripId, widget.day);
-            },
-            color: Colors.lightGreen,
-            child: const Text('Add'),
-          )
-        ],
-      ),
+    return PageView(
+      children: [
+
+      ],
     );
+    // return Padding(
+    //   padding: const EdgeInsets.all(16.0),
+    //   child: Column(
+    //     mainAxisSize: MainAxisSize.min,
+    //     children: [
+    //       const Text('Add dish'),
+    //       const SizedBox(
+    //         height: 20,
+    //       ),
+    //       Row(
+    //         children: [
+    //           Expanded(
+    //               child: TextField(
+    //             onChanged: vm.onNameChanged,
+    //           )),
+    //           _dishDropDownList(),
+    //         ],
+    //       ),
+    //       const SizedBox(
+    //         height: 20,
+    //       ),
+    //       MaterialButton(
+    //         onPressed: () {
+    //           vm.addOrUpdateDish(widget.tripId, widget.day);
+    //         },
+    //         color: Colors.lightGreen,
+    //         child: const Text('Add'),
+    //       )
+    //     ],
+    //   ),
+    // );
   }
 
   Widget _dishDropDownList() {
