@@ -30,9 +30,9 @@ class IngredientRepositoryImpl extends IngredientRepository {
   }
 
   @override
-  Stream<List<IngredientModelRepo>> getIngredients() {
+  Stream<List<IngredientModelRepo>> getIngredients(int index) {
     return _ingredientApi
-        .getIngredients()
+        .getIngredients(index)
         .map((e) => e.map((e) => IngredientModelRepo.fromFirebase(e)).toList());
   }
 }

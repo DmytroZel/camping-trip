@@ -1,5 +1,8 @@
 import 'package:camp_trip/feature/trip/add_dish_model_botom_sheet/add_dish_vm.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
+import '../../../../gen/assets.gen.dart';
 
 class ChangeDishPeriod extends StatefulWidget {
   final DishPeriod? selected;
@@ -29,32 +32,34 @@ class _ChangeDishPeriodState extends State<ChangeDishPeriod> {
           const SizedBox(
             height: 20,
           ),
-          Expanded(
-            child: GridView.builder(
-              itemCount: widget.dishTypes.length,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                mainAxisSpacing: 10,
-                crossAxisSpacing: 10,
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Wrap(
+                direction: Axis.horizontal,
+                spacing: 10,
+                children: [
+                  for (var value in widget.dishTypes)
+                    dishTypeWidget(value.name, value.period, widget.selected?.period, onDishTypeChanged: (_) {
+                      widget.onDishTypeChanged(value);
+                    },),
+                ],
               ),
-              itemBuilder: (context, index) {
-                final value = widget.dishTypes[index];
-                return dishTypeWidget(value.name, value.period, widget.selected?.period, onDishTypeChanged: (_) {
-                  widget.onDishTypeChanged(value);
-                  print('value: $value');
-                },);
-              },
-            ),
+            ],
           ),
           const SizedBox(
             height: 20,
           ),
-          MaterialButton(
-            onPressed: () {
-              widget.onContinue();
-            },
-            color: Colors.lightGreen,
-            child: const Text('Continue'),
+          Container(
+            width: 200,
+            child: MaterialButton(
+              onPressed: widget.selected != null ?() {
+                widget.onContinue();
+              }:null,
+              color: Colors.lightGreen,
+              child: const Text('Continue'),
+            ),
           )
 
         ],
@@ -76,12 +81,32 @@ class _ChangeDishPeriodState extends State<ChangeDishPeriod> {
           borderRadius: BorderRadius.circular(10),
         ),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.ac_unit),
+            SvgPicture.asset(
+              getPicture(index),
+              height: 50,
+              width: 50,
+            ),
             Text(dishType),
           ],
         ),
       ),
     );
   }
+
+  String getPicture(int index) {
+    switch (index) {
+      case 0:
+        return Assets.icons.breakfast.path;
+      case 1:
+        return Assets.icons.lanch.path;
+      case 2:
+        return Assets.icons.dinner.path;
+      case 3:
+        return Assets.icons.snack.path;
+      default:
+        return Assets.icons.breakfast.path;
+  }
+}
 }

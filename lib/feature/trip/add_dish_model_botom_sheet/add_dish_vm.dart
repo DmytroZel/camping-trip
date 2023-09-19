@@ -10,9 +10,12 @@ class AddDishVM extends BaseVM {
   final DishUseCase dishUseCase;
   final TripUseCase tripUseCase;
 
-  AddDishVM(this.dishUseCase, this.tripUseCase);
+  AddDishVM(this.dishUseCase, this.tripUseCase){
+    _subForDishList();
+  }
 
   String? dishName;
+  DishModel? dishModel;
   DishPeriod? dishPeriod;
   DishType? dishType;
   List<DishType> dishesTypes = [
@@ -20,8 +23,8 @@ class AddDishVM extends BaseVM {
     DishType(1, 'Dry food'),
     DishType(2, 'Porridge'),
     DishType(3, 'Snack'),
-
   ];
+
   List<DishPeriod> dishPeriods = [
     DishPeriod(0, 'Breakfast'),
     DishPeriod(1, 'Lunch'),
@@ -30,8 +33,21 @@ class AddDishVM extends BaseVM {
     DishPeriod(4, 'Dessert'),
   ];
 
+  List<DishModel> dishes = [];
+
   dishNameChanged(String? value) {
     dishName = value;
+    notifyListeners();
+  }
+
+  _subForDishList() {
+    dishUseCase.getDishes().listen((event) {
+      _onDishListChanged(event);
+    });
+  }
+
+  _onDishListChanged(List<DishModel> dishes) {
+    this.dishes = dishes;
     notifyListeners();
   }
 

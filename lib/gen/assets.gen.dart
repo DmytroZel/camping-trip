@@ -24,17 +24,53 @@ class $AssetsAnimationsGen {
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
+  /// File path: assets/icons/breakfast.svg
+  SvgGenImage get breakfast => const SvgGenImage('assets/icons/breakfast.svg');
+
+  /// File path: assets/icons/dessert.svg
+  SvgGenImage get dessert => const SvgGenImage('assets/icons/dessert.svg');
+
+  /// File path: assets/icons/dinner.svg
+  SvgGenImage get dinner => const SvgGenImage('assets/icons/dinner.svg');
+
+  /// File path: assets/icons/lanch.svg
+  SvgGenImage get lanch => const SvgGenImage('assets/icons/lanch.svg');
+
   /// File path: assets/icons/login_bg.svg
   SvgGenImage get loginBg => const SvgGenImage('assets/icons/login_bg.svg');
 
   /// File path: assets/icons/logo.svg
   SvgGenImage get logo => const SvgGenImage('assets/icons/logo.svg');
 
+  /// File path: assets/icons/porridge.svg
+  SvgGenImage get porridge => const SvgGenImage('assets/icons/porridge.svg');
+
+  /// File path: assets/icons/snack.svg
+  SvgGenImage get snack => const SvgGenImage('assets/icons/snack.svg');
+
+  /// File path: assets/icons/snack_type.svg
+  SvgGenImage get snackType => const SvgGenImage('assets/icons/snack_type.svg');
+
+  /// File path: assets/icons/soup.svg
+  SvgGenImage get soup => const SvgGenImage('assets/icons/soup.svg');
+
   /// File path: assets/icons/trip_bg.svg
   SvgGenImage get tripBg => const SvgGenImage('assets/icons/trip_bg.svg');
 
   /// List of all assets
-  List<SvgGenImage> get values => [loginBg, logo, tripBg];
+  List<SvgGenImage> get values => [
+        breakfast,
+        dessert,
+        dinner,
+        lanch,
+        loginBg,
+        logo,
+        porridge,
+        snack,
+        snackType,
+        soup,
+        tripBg
+      ];
 }
 
 class $AssetsImageGen {

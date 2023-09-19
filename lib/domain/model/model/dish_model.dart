@@ -15,6 +15,7 @@ class DishModel {
   final int? day;
   final DateTime? date;
   final List<IngredientModel>? ingredients;
+  final List<String>? steps;
 
   DishModel({
     required this.id,
@@ -24,6 +25,7 @@ class DishModel {
     this.period,
     this.date,
     this.day,
+    this.steps
   });
 
   DishModel.fromRepo(DishModelRepo r)
@@ -33,6 +35,7 @@ class DishModel {
         day = r.day,
         period = r.period,
         date = r.date,
+        steps = r.steps,
         ingredients =
             r.ingredients?.map((e) => IngredientModel.fromRepo(e)).toList();
 
@@ -43,6 +46,7 @@ class DishModel {
       int? period,
       List<IngredientModel>? ingredients,
       DateTime? date,
+      List<String>? steps,
       int? day}) {
     return DishModel(
       name: name ?? this.name,
@@ -51,6 +55,7 @@ class DishModel {
       date: date ?? this.date,
       day: day ?? this.day,
       id: id ?? this.id,
+      steps: steps ?? this.steps,
       period: period ?? this.period,
     );
   }

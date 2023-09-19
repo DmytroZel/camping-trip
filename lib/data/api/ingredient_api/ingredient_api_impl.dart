@@ -29,10 +29,15 @@ class IngredientApiImpl extends IngredientApi {
   }
 
   @override
-  Stream<List<FirebaseIngredientModel>> getIngredients() {
-    return ingredients.snapshots().map((event) => event.docs
-        .map<FirebaseIngredientModel>(
-            (ingredient) => FirebaseIngredientModel.fromJson(ingredient.data()))
-        .toList());
+  Stream<List<FirebaseIngredientModel>> getIngredients(int index) {
+    return ingredients
+        .where(
+          'type',
+          isEqualTo: index,
+    )
+        .snapshots()
+        .map((event) => event.docs
+            .map((e) => FirebaseIngredientModel.fromJson(e.data()))
+            .toList());
   }
 }

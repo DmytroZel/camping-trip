@@ -5,7 +5,7 @@ abstract class IngredientRepository {
 
   Future<void> deleteIngredient(String ingredientId);
 
-  Stream<List<IngredientModelRepo>> getIngredients();
+  Stream<List<IngredientModelRepo>> getIngredients(int index);
 
   Stream<IngredientModelRepo> getIngredient(String id);
 }

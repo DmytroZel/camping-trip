@@ -21,10 +21,17 @@ class _AddDishViewState extends State<AddDishView> {
     return ChangeNotifierProvider(
         create: (context) => serviceLocator<AddDishVM>(),
         child: AlertDialog(
-          title: const Text('Add dish'),
+          title: Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const Text('Add dish'),
+            ],
+          ),
           content: Container(
-            height: 300,
-            width: 300,
+            height: MediaQuery.of(context).size.height * 0.8,
+            width: MediaQuery.of(context).size.width * 0.8,
             child: Body(
               tripId: widget.tripId,
               day: widget.day,

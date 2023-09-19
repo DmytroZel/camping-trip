@@ -1,9 +1,11 @@
+import 'package:camp_trip/feature/trip/add_dish_model_botom_sheet/widget/add_new_dish/add_new_dish.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../add_dish_vm.dart';
 import 'chage_dish_type.dart';
 import 'change_dish_period.dart';
+import 'dish_list.dart';
 
 class Body extends StatefulWidget {
   final String tripId;
@@ -16,13 +18,19 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+  late PageController controller;
+  @override
+  void initState() {
+    controller = PageController(initialPage: 1);
+  }
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<AddDishVM>(context);
-    final PageController controller = PageController();
     return PageView(
+      physics: const NeverScrollableScrollPhysics(),
       controller: controller,
       children: [
+        const AddNewDish(),
         ChangeDishPeriod(selected: vm.dishPeriod, onDishTypeChanged: (value) {
           vm.dishPeriodChanged(value);
         }, dishTypes: vm.dishPeriods, onContinue: () {
@@ -32,9 +40,10 @@ class _BodyState extends State<Body> {
           vm.dishTypeChanged(value);
         }, dishTypes: vm.dishesTypes, onContinue: () {
           controller.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.easeIn); },
-
         ),
-
+        DishList(dishes: vm.dishes, onAddDish: (){
+          controller.jumpToPage(0);
+        },),
       ],
     );
     // return Padding(

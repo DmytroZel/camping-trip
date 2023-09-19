@@ -9,6 +9,7 @@ class DishModelRepo {
   final int? type;
   final int? period;
   final int? day;
+  final List<String>? steps;
   final DateTime? date;
   final List<IngredientModelRepo>? ingredients;
 
@@ -19,6 +20,7 @@ class DishModelRepo {
       this.date,
       this.period,
       this.day,
+      this.steps,
       required this.id});
 
   DishModelRepo.fromFirebase(FirebaseDishModel r)
@@ -28,6 +30,7 @@ class DishModelRepo {
         day = r.day,
         period = r.period,
         date = r.date,
+        steps = r.steps,
         ingredients = r.ingredients
             ?.map((e) => IngredientModelRepo.fromFirebase(e))
             .toList();
@@ -39,6 +42,7 @@ class DishModelRepo {
         day = r.day,
         period = r.period,
         date = r.date,
+        steps = r.steps,
         ingredients = r.ingredients
             ?.map((e) => IngredientModelRepo.fromModel(e))
             .toList();

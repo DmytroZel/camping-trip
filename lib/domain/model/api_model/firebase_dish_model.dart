@@ -8,6 +8,7 @@ class FirebaseDishModel {
   final int? period;
   final int? day;
   final DateTime? date;
+  final List<String>? steps;
   final List<FirebaseIngredientModel>? ingredients;
 
   FirebaseDishModel({
@@ -17,6 +18,7 @@ class FirebaseDishModel {
     this.ingredients,
     this.date,
     this.period,
+    this.steps,
     this.day,
   });
 
@@ -26,6 +28,9 @@ class FirebaseDishModel {
         type = json['type'],
         day = json['day'],
   period = json['period'],
+        steps = json['steps'] != null
+            ? List<String>.from(json['steps'].map((e) => e))
+            : null,
         date = json['date'] != null ? DateTime.parse(json['date']) : null,
         ingredients = json['ingredients'] != null
             ? List<FirebaseIngredientModel>.from(json['ingredients']
@@ -38,6 +43,7 @@ class FirebaseDishModel {
         'type': type,
         'period': period,
         'day': day,
+        'steps': steps,
         'date': date?.toIso8601String(),
         'ingredients': ingredients?.map((e) => e.toJson()).toList(),
       };
@@ -48,6 +54,7 @@ class FirebaseDishModel {
         type = r.type,
         day = r.day,
         period = r.period,
+        steps = r.steps,
         date = r.date,
         ingredients = r.ingredients
             ?.map((e) => FirebaseIngredientModel.fromRepo(e))

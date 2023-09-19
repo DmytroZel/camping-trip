@@ -29,11 +29,11 @@ import 'data/api/invite_api/invite_api.dart' as _i18;
 import 'data/api/invite_api/invite_api_impl.dart' as _i19;
 import 'data/api/user_api/firebase_user_api.dart' as _i10;
 import 'data/api/user_api/firebase_user_api_impl.dart' as _i11;
-import 'data/di/dependency_module.dart' as _i58;
+import 'data/di/dependency_module.dart' as _i59;
 import 'data/firebase_storage/firebase_storage_module.dart' as _i6;
 import 'data/firebase_storage/firebase_storage_module_impl.dart' as _i7;
-import 'data/repository/auth_repository/auth_repo.dart' as _i38;
-import 'data/repository/auth_repository/auth_repo_impl.dart' as _i39;
+import 'data/repository/auth_repository/auth_repo.dart' as _i39;
+import 'data/repository/auth_repository/auth_repo_impl.dart' as _i40;
 import 'data/repository/dish_repository/dish_repository.dart' as _i28;
 import 'data/repository/dish_repository/dish_repository_impl.dart' as _i29;
 import 'data/repository/ingredient_repository/ingredient_repository.dart'
@@ -42,37 +42,39 @@ import 'data/repository/ingredient_repository/ingredient_repository_impl.dart'
     as _i15;
 import 'data/repository/invite_repo/invite_repo.dart' as _i20;
 import 'data/repository/invite_repo/invite_repo_impl.dart' as _i21;
-import 'data/repository/trip_repo/trip_repo.dart' as _i45;
-import 'data/repository/trip_repo/trip_repo_impl.dart' as _i46;
+import 'data/repository/trip_repo/trip_repo.dart' as _i46;
+import 'data/repository/trip_repo/trip_repo_impl.dart' as _i47;
 import 'data/repository/user_repo/user_repo.dart' as _i34;
 import 'data/repository/user_repo/user_repo_impl.dart' as _i35;
 import 'data/shared_preferences/shared_preferences_module.dart' as _i32;
 import 'data/shared_preferences/shared_preferences_module_impl.dart' as _i33;
-import 'data/use_cases/auth_use_case/auth_use_case.dart' as _i40;
-import 'data/use_cases/auth_use_case/auth_use_case_impl.dart' as _i41;
+import 'data/use_cases/auth_use_case/auth_use_case.dart' as _i41;
+import 'data/use_cases/auth_use_case/auth_use_case_impl.dart' as _i42;
 import 'data/use_cases/dish_use_case/dish_use_case.dart' as _i30;
 import 'data/use_cases/dish_use_case/dish_use_case_impl.dart' as _i31;
 import 'data/use_cases/ingredients_use_case/ingredient_use_case.dart' as _i16;
 import 'data/use_cases/ingredients_use_case/ingredient_use_case_impl.dart'
     as _i17;
-import 'data/use_cases/invite_user_use_case/invite_user_use_case.dart' as _i52;
+import 'data/use_cases/invite_user_use_case/invite_user_use_case.dart' as _i53;
 import 'data/use_cases/invite_user_use_case/invite_user_use_case_impl.dart'
-    as _i53;
-import 'data/use_cases/trip_use_case/trip_use_case.dart' as _i47;
-import 'data/use_cases/trip_use_case/trip_use_case_impl.dart' as _i48;
+    as _i54;
+import 'data/use_cases/trip_use_case/trip_use_case.dart' as _i48;
+import 'data/use_cases/trip_use_case/trip_use_case_impl.dart' as _i49;
 import 'data/use_cases/user_use_case/user_use_case.dart' as _i36;
 import 'data/use_cases/user_use_case/user_use_case_impl.dart' as _i37;
-import 'feature/account/account_vm.dart' as _i57;
-import 'feature/create_trip/create_trip_vm.dart' as _i51;
+import 'feature/account/account_vm.dart' as _i58;
+import 'feature/create_trip/create_trip_vm.dart' as _i52;
 import 'feature/ingredients/add_ingredients/add_ingredients_vm.dart' as _i23;
-import 'feature/initial/initila_vm.dart' as _i42;
-import 'feature/login/login_vm.dart' as _i43;
-import 'feature/login/register/register_vm.dart' as _i44;
-import 'feature/main/main_vm.dart' as _i54;
-import 'feature/trip/add_dish_model_botom_sheet/add_dish_vm.dart' as _i50;
-import 'feature/trip/settings/trip_settings_vm.dart' as _i55;
-import 'feature/trip/trip_vm.dart' as _i56;
-import 'feature/user_list/user_list_vm.dart' as _i49;
+import 'feature/initial/initila_vm.dart' as _i43;
+import 'feature/login/login_vm.dart' as _i44;
+import 'feature/login/register/register_vm.dart' as _i45;
+import 'feature/main/main_vm.dart' as _i55;
+import 'feature/trip/add_dish_model_botom_sheet/add_dish_vm.dart' as _i51;
+import 'feature/trip/add_dish_model_botom_sheet/widget/add_new_dish/add_new_dish_vm.dart'
+    as _i38;
+import 'feature/trip/settings/trip_settings_vm.dart' as _i56;
+import 'feature/trip/trip_vm.dart' as _i57;
+import 'feature/user_list/user_list_vm.dart' as _i50;
 
 // ignore_for_file: unnecessary_lambdas
 // ignore_for_file: lines_longer_than_80_chars
@@ -101,7 +103,8 @@ Future<_i1.GetIt> $initGetIt(
       () => _i13.IngredientApiImpl(gh<_i4.FirebaseFirestore>()));
   gh.factory<_i14.IngredientRepository>(
       () => _i15.IngredientRepositoryImpl(gh<_i12.IngredientApi>()));
-  gh.factory<_i16.IngredientUseCase>(() => _i17.IngredientUseCaseImpl());
+  gh.factory<_i16.IngredientUseCase>(
+      () => _i17.IngredientUseCaseImpl(gh<_i14.IngredientRepository>()));
   gh.factory<_i18.InviteApi>(
       () => _i19.InviteApiImpl(gh<_i4.FirebaseFirestore>()));
   gh.factory<_i20.InviteRepo>(() => _i21.InviteRepoImpl(
@@ -132,66 +135,70 @@ Future<_i1.GetIt> $initGetIt(
         gh<_i6.FirebaseStorageModule>(),
       ));
   gh.factory<_i36.UserUseCase>(() => _i37.UserUseCaseImpl(gh<_i34.UserRepo>()));
-  gh.factory<_i38.AuthRepo>(() => _i39.AuthRepoImpl(
+  gh.factory<_i38.AddNewDishVM>(() => _i38.AddNewDishVM(
+        gh<_i30.DishUseCase>(),
+        gh<_i16.IngredientUseCase>(),
+      ));
+  gh.factory<_i39.AuthRepo>(() => _i40.AuthRepoImpl(
         gh<_i10.FirebaseUserAPi>(),
         firebaseAuthModule: gh<_i24.AuthApi>(),
         sharedPreferencesModule: gh<_i32.SharedPreferencesModule>(),
       ));
-  gh.factory<_i40.AuthUseCase>(() => _i41.AuthUseCaseImpl(gh<_i38.AuthRepo>()));
-  gh.factory<_i42.InitialVm>(() => _i42.InitialVm(gh<_i40.AuthUseCase>()));
-  gh.factory<_i43.LoginVm>(() => _i43.LoginVm(gh<_i40.AuthUseCase>()));
-  gh.factory<_i44.RegisterVM>(() => _i44.RegisterVM(gh<_i36.UserUseCase>()));
-  gh.factory<_i45.TripRepo>(() => _i46.TripRepoImpl(
+  gh.factory<_i41.AuthUseCase>(() => _i42.AuthUseCaseImpl(gh<_i39.AuthRepo>()));
+  gh.factory<_i43.InitialVm>(() => _i43.InitialVm(gh<_i41.AuthUseCase>()));
+  gh.factory<_i44.LoginVm>(() => _i44.LoginVm(gh<_i41.AuthUseCase>()));
+  gh.factory<_i45.RegisterVM>(() => _i45.RegisterVM(gh<_i36.UserUseCase>()));
+  gh.factory<_i46.TripRepo>(() => _i47.TripRepoImpl(
         gh<_i8.FirebaseTripApi>(),
-        gh<_i38.AuthRepo>(),
+        gh<_i39.AuthRepo>(),
       ));
-  gh.factory<_i47.TripUseCase>(() => _i48.TripUseCaseImpl(
-        gh<_i45.TripRepo>(),
+  gh.factory<_i48.TripUseCase>(() => _i49.TripUseCaseImpl(
+        gh<_i46.TripRepo>(),
         gh<_i34.UserRepo>(),
       ));
-  gh.factory<_i49.UserListVm>(() => _i49.UserListVm(gh<_i36.UserUseCase>()));
-  gh.factory<_i50.AddDishVM>(() => _i50.AddDishVM(
+  gh.factory<_i50.UserListVm>(() => _i50.UserListVm(gh<_i36.UserUseCase>()));
+  gh.factory<_i51.AddDishVM>(() => _i51.AddDishVM(
         gh<_i30.DishUseCase>(),
-        gh<_i47.TripUseCase>(),
+        gh<_i48.TripUseCase>(),
       ));
-  gh.factory<_i51.CreateTripVm>(() => _i51.CreateTripVm(
-        gh<_i47.TripUseCase>(),
+  gh.factory<_i52.CreateTripVm>(() => _i52.CreateTripVm(
+        gh<_i48.TripUseCase>(),
         gh<_i36.UserUseCase>(),
       ));
-  gh.factory<_i52.InviteUserUseCase>(() => _i53.InviteUserUseCaseImpl(
+  gh.factory<_i53.InviteUserUseCase>(() => _i54.InviteUserUseCaseImpl(
         gh<_i20.InviteRepo>(),
-        gh<_i45.TripRepo>(),
+        gh<_i46.TripRepo>(),
       ));
-  gh.factory<_i54.MainVm>(() => _i54.MainVm(
-        gh<_i40.AuthUseCase>(),
+  gh.factory<_i55.MainVm>(() => _i55.MainVm(
+        gh<_i41.AuthUseCase>(),
         gh<_i36.UserUseCase>(),
-        gh<_i47.TripUseCase>(),
+        gh<_i48.TripUseCase>(),
       ));
-  gh.factoryParam<_i55.TripSettingsVM, String, dynamic>((
+  gh.factoryParam<_i56.TripSettingsVM, String, dynamic>((
     tripId,
     _,
   ) =>
-      _i55.TripSettingsVM(
-        gh<_i47.TripUseCase>(),
-        gh<_i52.InviteUserUseCase>(),
+      _i56.TripSettingsVM(
+        gh<_i48.TripUseCase>(),
+        gh<_i53.InviteUserUseCase>(),
         gh<_i36.UserUseCase>(),
         tripId: tripId,
       ));
-  gh.factoryParam<_i56.TripVM, String, dynamic>((
+  gh.factoryParam<_i57.TripVM, String, dynamic>((
     id,
     _,
   ) =>
-      _i56.TripVM(
-        gh<_i47.TripUseCase>(),
+      _i57.TripVM(
+        gh<_i48.TripUseCase>(),
         id,
         gh<_i36.UserUseCase>(),
-        gh<_i52.InviteUserUseCase>(),
+        gh<_i53.InviteUserUseCase>(),
       ));
-  gh.factory<_i57.AccountVM>(() => _i57.AccountVM(
+  gh.factory<_i58.AccountVM>(() => _i58.AccountVM(
         gh<_i36.UserUseCase>(),
-        gh<_i52.InviteUserUseCase>(),
+        gh<_i53.InviteUserUseCase>(),
       ));
   return getIt;
 }
 
-class _$DependencyModule extends _i58.DependencyModule {}
+class _$DependencyModule extends _i59.DependencyModule {}
