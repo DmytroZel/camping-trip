@@ -33,8 +33,8 @@ class AddNewDishVM extends BaseVM {
     if (dishName == null || dishName!.isEmpty) {
       return;
     }
-    dishModel =
-        DishModel(name: dishName!, ingredients: ingredients, id: Uuid().v4());
+    dishModel = DishModel(
+        name: dishName!, ingredients: ingredients, id: const Uuid().v4());
     await dishUseCase.addOrUpdate(dishModel!);
     dishName = null;
     ingredients = [];
@@ -44,6 +44,25 @@ class AddNewDishVM extends BaseVM {
   onIngredientSelected(IngredientsType value) {
     selectedIngredient = value;
     subForIngredients();
+    notifyListeners();
+  }
+
+  bool isSelected(String ingredientId) {
+    return ingredients.any((element) => element.id == ingredientId);
+  }
+
+  onAddIngredientsToList(IngredientModel ingredientModel, bool isSoup) {
+    IngredientModel ingredient = ingredientModel;
+    if (isSoup) {
+      ingredient =
+          ingredient.copyWith(amount: ((ingredientModel.defaultAmount) * 0.5));
+    }
+    if (isSelected(ingredient.id)) {
+      ingredients.removeWhere((element) => element.id == ingredient.id);
+      notifyListeners();
+      return;
+    }
+    ingredients.add(ingredient);
     notifyListeners();
   }
 
@@ -77,7 +96,7 @@ class AddNewDishVM extends BaseVM {
   }
 
   onIngredientListChanged(List<IngredientModel> ingredients) {
-    this.ingredients = ingredients;
+    allIngredients = ingredients;
     notifyListeners();
   }
 
@@ -104,5 +123,16 @@ class AddNewDishVM extends BaseVM {
     ingredientName = null;
     ingredientAmount = null;
     notifyListeners();
+  }
+
+  deleteIngredient(IngredientModel ingredientModel) async {
+    ingredients.removeWhere((element) => element.id == ingredientModel.id);
+    notifyListeners();
+  }
+
+  DishModel createDishModel() {
+    dishModel = DishModel(
+        name: dishName!, ingredients: ingredients, id: const Uuid().v4());
+    return dishModel!;
   }
 }

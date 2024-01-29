@@ -1,7 +1,7 @@
-import 'package:camp_trip/feature/trip/add_dish_model_botom_sheet/add_dish_vm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../../../gen/assets.gen.dart';
+import '../add_dish_vm.dart';
 
 class ChangeDishType extends StatefulWidget {
   final DishType? selected;
@@ -9,7 +9,12 @@ class ChangeDishType extends StatefulWidget {
   final ValueChanged<DishType> onDishTypeChanged;
   final List<DishType> dishTypes;
 
-  const ChangeDishType({super.key, required this.selected, required this.onDishTypeChanged, required this.dishTypes, required this.onContinue});
+  const ChangeDishType(
+      {super.key,
+      required this.selected,
+      required this.onDishTypeChanged,
+      required this.dishTypes,
+      required this.onContinue});
 
   @override
   State<ChangeDishType> createState() => _ChangeDishPeriodState();
@@ -27,7 +32,6 @@ class _ChangeDishPeriodState extends State<ChangeDishType> {
       ),
       child: Column(
         children: [
-          const Text('Change dish type'),
           const SizedBox(
             height: 20,
           ),
@@ -40,9 +44,14 @@ class _ChangeDishPeriodState extends State<ChangeDishType> {
                 spacing: 10,
                 children: [
                   for (var value in widget.dishTypes)
-                    dishTypeWidget(value.name, value.type, widget.selected?.type, onDishTypeChanged: (_) {
-                      widget.onDishTypeChanged(value);
-                    },),
+                    dishTypeWidget(
+                      value.name,
+                      value.type,
+                      widget.selected?.type,
+                      onDishTypeChanged: (_) {
+                        widget.onDishTypeChanged(value);
+                      },
+                    ),
                 ],
               ),
             ],
@@ -51,13 +60,14 @@ class _ChangeDishPeriodState extends State<ChangeDishType> {
             height: 20,
           ),
           MaterialButton(
-            onPressed: widget.selected != null ?() {
-              widget.onContinue();
-            }:null,
+            onPressed: widget.selected != null
+                ? () {
+                    widget.onContinue();
+                  }
+                : null,
             color: Colors.lightGreen,
-            child: const Text('Continue'),
+            child: const Text('Продовжити'),
           )
-
         ],
       ),
     );
@@ -108,4 +118,3 @@ class _ChangeDishPeriodState extends State<ChangeDishType> {
     }
   }
 }
-

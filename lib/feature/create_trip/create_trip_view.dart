@@ -25,7 +25,7 @@ class _CreateTrioViewState extends BaseState<CreateTrioView> {
     final vm = Provider.of<CreateTripVm>(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Create trip"),
+        title: const Text("Створити похід"),
       ),
       body: AppCard(
         child: Column(
@@ -55,7 +55,7 @@ class _CreateTrioViewState extends BaseState<CreateTrioView> {
     return TextField(
       onChanged: vm.onChangedName,
       decoration: const InputDecoration(
-        hintText: "Name",
+        hintText: "Назва",
       ),
     );
   }

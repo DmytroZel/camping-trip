@@ -24,11 +24,17 @@ class MainVm extends BaseVM {
 
   UserModel? userModel;
   List<TripModel> trips = [];
+  int selectedPageIndex = 0;
 
   StreamController<void> goToInitial = StreamController<void>();
 
   onLogoutTap() async {
     await _authUseCase.singOut();
+  }
+
+  onSelectedPage(int index) {
+    selectedPageIndex = index;
+    notifyListeners();
   }
 
   _subForUserModel() {

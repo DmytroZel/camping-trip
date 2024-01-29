@@ -1,11 +1,9 @@
 import 'package:camp_trip/common/extension/stream_subscription_extensions.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:loading_indicator/loading_indicator.dart';
 import 'package:provider/provider.dart';
-
 import '../../common/base/base_state.dart';
-import '../../gen/assets.gen.dart';
 import '../../routers/screen_names.dart';
 import 'initila_vm.dart';
 
@@ -21,12 +19,6 @@ class _InitialPageState extends BaseState<InitialPage> {
   double height = 0;
   @override
   void initState() {
-    Future.delayed(const Duration(milliseconds: 200), () {
-      setState(() {
-        width = 200;
-        height = 200;
-      });
-    });
     super.initState();
     _subForGoNext();
   }
@@ -37,16 +29,27 @@ class _InitialPageState extends BaseState<InitialPage> {
       body: Container(
           color: Colors.lightBlue,
           child: Center(
-            child: AnimatedContainer(
-                duration: const Duration(milliseconds: 1000),
-                width: width,
-                height: height,
-                child: SvgPicture.asset(
-                  Assets.icons.logo.path,
-                  colorFilter:
-                      const ColorFilter.mode(Colors.white, BlendMode.srcIn),
-                )),
-          )),
+              child: SizedBox(
+            width: 100,
+            height: 100,
+            child: LoadingIndicator(
+                indicatorType: Indicator.pacman,
+
+                /// Required, The loading type of the widget
+                colors: const [Colors.white],
+
+                /// Optional, The color collections
+                strokeWidth: 2,
+
+                /// Optional, The stroke of the line, only applicable to widget which contains line
+                backgroundColor: Colors.transparent,
+
+                /// Optional, Background of the widget
+                pathBackgroundColor: Colors.transparent
+
+                /// Optional, the stroke backgroundColor
+                ),
+          ))),
     );
   }
 
@@ -60,9 +63,9 @@ class _InitialPageState extends BaseState<InitialPage> {
 
   _goToLogIn(bool isLogIn) {
     if (isLogIn) {
-      context.replace(ScreenNames.main);
+      context.go(ScreenNames.main);
     } else {
-      context.replace(ScreenNames.logIn);
+      context.go(ScreenNames.logIn);
     }
   }
 }

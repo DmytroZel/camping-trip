@@ -1,10 +1,13 @@
 import 'package:camp_trip/data/repository/trip_repo/trip_repo.dart';
 import 'package:camp_trip/domain/model/repository/dish_model_repo.dart';
+import 'package:camp_trip/domain/model/repository/eq_model_repo.dart';
 import 'package:camp_trip/domain/model/repository/trip_model_repo.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../domain/model/api_model/firebase_dish_model.dart';
+import '../../../domain/model/api_model/firebase_eq_model.dart';
 import '../../../domain/model/api_model/firebase_trip_model.dart';
+import '../../../domain/model/model/eq_model.dart';
 import '../../../domain/model/model/trip_model.dart';
 import '../../api/firebase_trip_api/firebase_trip_api.dart';
 import '../auth_repository/auth_repo.dart';
@@ -72,5 +75,23 @@ class TripRepoImpl extends TripRepo {
   @override
   Future<void> deleteMember(String member, String tripId) {
     return tripApi.deleteMember(member, tripId);
+  }
+
+  @override
+  Future<void> addOrUpdateEqItem(EqModel eqItemModel, String tripId) {
+    return tripApi.addOrUpdateEqItem(
+        FirebaseEqModel.fromRepo(EqModelRepo.fromModel(eqItemModel)), tripId);
+  }
+
+  @override
+  Future<void> deleteEqItem(String eqItemId, String tripId) {
+    return tripApi.deleteEqItem(eqItemId, tripId);
+  }
+
+  @override
+  Stream<List<EqModelRepo>> getEqItems(String tripId) {
+    return tripApi
+        .getEqItems(tripId)
+        .map((event) => event.map((e) => EqModelRepo.fromFirebase(e)).toList());
   }
 }

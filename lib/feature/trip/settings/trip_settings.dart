@@ -19,6 +19,7 @@ class TripSettings extends StatefulWidget {
 
 class _TripSettingsState extends BaseState<TripSettings> {
   final _nameController = TextEditingController();
+  final _membersController = TextEditingController();
 
   @override
   void initState() {
@@ -28,43 +29,45 @@ class _TripSettingsState extends BaseState<TripSettings> {
     vm.onLoadName.stream.listen((event) {
       _nameController.text = event;
     }).toBag(bag);
+    vm.onLoadTotalMembers.stream.listen((event) {
+      _membersController.text = event;
+    }).toBag(bag);
   }
 
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<TripSettingsVM>(context);
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.lightGreen,
-        title: const Text("Trip settings"),
-      ),
-      body: ListView(
-        shrinkWrap: true,
-        children: [
-          AppCard(
-            child: Column(
-              children: [
-                _name(),
-                const SizedBox(
-                  height: 20,
-                ),
-                _date(),
-                _members(),
-              ],
+        appBar: AppBar(
+          backgroundColor: Colors.lightGreen,
+          title: const Text("Trip settings"),
+        ),
+        body: ListView(
+          shrinkWrap: true,
+          children: [
+            AppCard(
+              child: Column(
+                children: [
+                  _name(),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  _date(),
+                  _members(),
+                ],
+              ),
             ),
-          ),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          if (vm.isProgress) return;
-          vm.saveChanges();
-        },
-        child: vm.isProgress
-            ? const CircularProgressIndicator()
-            : const Icon(Icons.check),
-      )
-    );
+          ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            if (vm.isProgress) return;
+            vm.saveChanges();
+          },
+          child: vm.isProgress
+              ? const CircularProgressIndicator()
+              : const Icon(Icons.check),
+        ));
   }
 
   Widget _name() {
@@ -168,6 +171,23 @@ class _TripSettingsState extends BaseState<TripSettings> {
           children: [
             Text("${vm.period} days"),
           ],
+        ),
+        Row(
+          children: [
+            Text("Кількість усників"),
+            const SizedBox(
+              width: 20,
+            ),
+            Expanded(
+              child: TextField(
+                controller: _membersController,
+                onChanged: vm.onCahangeTotalMembers,
+                decoration: const InputDecoration(
+                  hintText: "Кількість усників",
+                ),
+              ),
+            )
+          ],
         )
       ],
     );
@@ -242,9 +262,11 @@ class _TripSettingsState extends BaseState<TripSettings> {
 
   onInviteTap() async {
     final vm = Provider.of<TripSettingsVM>(context, listen: false);
-    final UserModel? inviteUser = await context.push(ScreenNames.userList);
+    final inviteUser = await context.push(ScreenNames.userList);
     if (inviteUser is UserModel) {
       vm.onUserSelected(inviteUser);
+    } else if (inviteUser is String) {
+      vm.addLocalUser(inviteUser.toString());
     }
   }
 

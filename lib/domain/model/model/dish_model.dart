@@ -17,16 +17,15 @@ class DishModel {
   final List<IngredientModel>? ingredients;
   final List<String>? steps;
 
-  DishModel({
-    required this.id,
-    required this.name,
-    this.type,
-    this.ingredients,
-    this.period,
-    this.date,
-    this.day,
-    this.steps
-  });
+  DishModel(
+      {required this.id,
+      required this.name,
+      this.type,
+      this.ingredients,
+      this.period,
+      this.date,
+      this.day,
+      this.steps});
 
   DishModel.fromRepo(DishModelRepo r)
       : id = r.id,

@@ -14,6 +14,7 @@ class UserListVm extends BaseVM {
   }
 
   final List<UserModel> users = [];
+  String? _localUserName;
 
   _subForUsers() {
     _userUseCase.getUsers().listen((event) {
@@ -21,9 +22,17 @@ class UserListVm extends BaseVM {
     }).toBag(bag);
   }
 
+  onNameChanged(String value) {
+    _localUserName = value;
+  }
+
+  String get localUserName => _localUserName ?? '';
+
   _onUsersChanged(List<UserModel> event) {
     users.clear();
     users.addAll(event);
     notifyListeners();
   }
+
+  UserModel? selectedUser;
 }

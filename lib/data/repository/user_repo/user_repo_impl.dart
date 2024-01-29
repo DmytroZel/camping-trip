@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:camp_trip/data/api/user_api/firebase_user_api.dart';
 import 'package:camp_trip/data/firebase_storage/firebase_storage_module.dart';
 import 'package:camp_trip/data/repository/user_repo/user_repo.dart';
@@ -16,7 +14,8 @@ class UserRepoImpl extends UserRepo {
   final FirebaseStorageModule firebaseStorageModule;
   final SharedPreferencesModule sharedPreferencesModule;
 
-  UserRepoImpl(this.firebaseUserAPi, this.sharedPreferencesModule, this.firebaseStorageModule);
+  UserRepoImpl(this.firebaseUserAPi, this.sharedPreferencesModule,
+      this.firebaseStorageModule);
   @override
   Future<void> addOrUpdate(UserModelRepo userModel) {
     return firebaseUserAPi.addOrUpdate(FirebaseUserModel.fromRepo(userModel));

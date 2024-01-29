@@ -1,9 +1,7 @@
 import 'package:camp_trip/domain/model/model/trip_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../gen/assets.gen.dart';
 import '../../../routers/screen_names.dart';
 
 class TripItem extends StatelessWidget {
@@ -14,30 +12,33 @@ class TripItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: GestureDetector(
-        onTap: () {
-          context.push(ScreenNames.trip, extra: tripModel.id);
-        },
-        child: Stack(
-          children: [
-            SizedBox(
-              height: 100,
-              width: 300,
-              child: Stack(
+    return SizedBox(
+      height: 300,
+      width: 300,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16),
+        child: InkWell(
+          onTap: () {
+            context.go(ScreenNames.trip, extra: tripModel.id);
+          },
+          child: Stack(
+            children: [
+              Stack(
                 children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(30),
-                    child: SvgPicture.asset(
-                      Assets.icons.tripBg.path,
-                      fit: BoxFit.cover,
+                  //gradient background
+                  Opacity(
+                    opacity: 0.4,
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(8)),
+                        gradient: LinearGradient(
+                          colors: [
+                            Colors.lightGreen,
+                            Colors.green,
+                          ],
+                        ),
+                      ),
                     ),
-                  ),
-                  Container(
-                    height: 100,
-                    width: double.infinity,
-                    color: Colors.white.withOpacity(0.7),
                   ),
                   Positioned(
                     top: 10,
@@ -61,6 +62,29 @@ class TripItem extends StatelessWidget {
                       ),
                     ),
                   ),
+                  Positioned(
+                    bottom: 10,
+                    left: 10,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          getDateFormat(tripModel.startDate),
+                          style: const TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          getDateFormat(tripModel.startDate),
+                          style: const TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                   Visibility(
                       visible: isOwner,
                       child: const Positioned(
@@ -70,10 +94,14 @@ class TripItem extends StatelessWidget {
                       )),
                 ],
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
+  }
+
+  String getDateFormat(DateTime date) {
+    return "${date.day}.${date.month}.${date.year}";
   }
 }

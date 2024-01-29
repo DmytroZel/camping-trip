@@ -27,7 +27,7 @@ class FirebaseDishModel {
         name = json['name'],
         type = json['type'],
         day = json['day'],
-  period = json['period'],
+        period = json['period'],
         steps = json['steps'] != null
             ? List<String>.from(json['steps'].map((e) => e))
             : null,

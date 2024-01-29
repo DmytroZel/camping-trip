@@ -23,6 +23,20 @@ class _UserListViewState extends BaseState<UserListView> {
       ),
       body: ListView.builder(
         itemBuilder: (context, index) {
+          if (index == vm.users.length) {
+            return GestureDetector(
+                onTap: () {
+                  showAddUserDialog(context);
+                },
+                child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.lightGreen,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    margin: const EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(16),
+                    child: const Text('Локальний користувач')));
+          }
           final user = vm.users[index];
           return GestureDetector(
               onTap: () {
@@ -30,8 +44,36 @@ class _UserListViewState extends BaseState<UserListView> {
               },
               child: UserCard(user: user));
         },
-        itemCount: vm.users.length,
+        itemCount: vm.users.length + 1,
       ),
     );
+  }
+
+  showAddUserDialog(BuildContext context) {
+    final vm = Provider.of<UserListVm>(context, listen: false);
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('Add user'),
+            content: TextField(
+              onChanged: vm.onNameChanged,
+              decoration: const InputDecoration(hintText: 'User name'),
+            ),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    context.pop();
+                  },
+                  child: const Text('Cancel')),
+              TextButton(
+                  onPressed: () {
+                    context.pop(vm.localUserName);
+                    context.pop(vm.localUserName);
+                  },
+                  child: const Text('Add')),
+            ],
+          );
+        });
   }
 }

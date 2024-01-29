@@ -14,7 +14,8 @@ class UserUseCaseImpl extends UserUseCase {
   Future<void> addOrUpdate(UserModel userModel) async {
     UserModel user = userModel;
     if (userModel.imageToUpload != null) {
-      final image = await userRepo.uploadImageToUser(userModel.id, userModel.imageToUpload!);
+      final image = await userRepo.uploadImageToUser(
+          userModel.id, userModel.imageToUpload!);
       user = userModel.copyWith(image: image);
     }
     return userRepo.addOrUpdate(UserModelRepo.fromModel(user));

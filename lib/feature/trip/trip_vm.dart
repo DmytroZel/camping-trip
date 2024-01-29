@@ -23,6 +23,7 @@ class TripVM extends BaseVM {
   List<UserModel> users = [];
   List<MemberModel> members = [];
   List<String> membersIds = [];
+  List<TotalIngredient> totalIngredients = [];
   StreamSubscription? _subForUsersSubscription;
 
   TripVM(this._tripUseCase, @factoryParam this.id, this._userUseCase,
@@ -50,6 +51,7 @@ class TripVM extends BaseVM {
 
   _onMembersChanged(List<MemberModel> event) {
     members = event;
+    _getTotalList();
     notifyListeners();
   }
 
@@ -103,13 +105,14 @@ class TripVM extends BaseVM {
     notifyListeners();
   }
 
-  onAddIngredientToDish(IngredientModel item, String dishId) {
+  onAddIngredientToDish(IngredientModel item, String dishId) async {
     final dishIndex = dishItems.indexWhere((element) => element.id == dishId);
     if (dishIndex == -1) return;
     if (dishItems[dishIndex].ingredients == null) {
       dishItems[dishIndex] = dishItems[dishIndex].copyWith(ingredients: []);
     }
     dishItems[dishIndex].ingredients?.add(item);
+    await _tripUseCase.addOrUpdateDishItem(dishItems[dishIndex], id);
     notifyListeners();
   }
 
@@ -156,6 +159,101 @@ class TripVM extends BaseVM {
 
   _onDishItemsChanged(List<DishModel> event) {
     dishItems = event;
+    _getTotalList();
     notifyListeners();
+  }
+
+  _getTotalList() {
+    totalIngredients = [];
+    for (var element in dishItems) {
+      element.ingredients?.forEach((element) {
+        var index =
+            totalIngredients.indexWhere((item) => item.name == element.name);
+        if (index == -1) {
+          totalIngredients.add(TotalIngredient(
+              element.name,
+              (element.amount ?? element.defaultAmount) *
+                  (trip!.totalMembers ?? trip!.members.length)));
+        } else {
+          totalIngredients[index] = totalIngredients[index].copyWith(
+              amount: totalIngredients[index].amount +
+                  ((element.amount ?? element.defaultAmount) *
+                      (trip!.totalMembers ?? trip!.members.length)));
+        }
+      });
+    }
+  }
+
+  List<TotalIngredient> getTotalList() {
+    return totalIngredients;
+  }
+
+  String getTotalWeight() {
+    double totalWeight = 0;
+    for (var element in dishItems) {
+      element.ingredients?.forEach((element) {
+        totalWeight = totalWeight +
+            ((element.amount ?? element.defaultAmount) *
+                (trip!.totalMembers ?? trip!.members.length));
+      });
+    }
+    return totalWeight.toString();
+  }
+
+  updateDish(DishModel dishModel) {
+    _tripUseCase.addOrUpdateDishItem(dishModel, trip?.id ?? '');
+  }
+
+  onEditIngredient(IngredientModel ingredientModel, double value,
+      DishModel dishModel) async {
+    final dishIndex =
+        dishItems.indexWhere((element) => element.id == dishModel.id);
+    if (dishIndex == -1) return;
+    final ingredientIndex = dishItems[dishIndex]
+        .ingredients
+        ?.indexWhere((element) => element.id == ingredientModel.id);
+    if (ingredientIndex == -1) return;
+    dishItems[dishIndex].ingredients?[ingredientIndex!] = dishItems[dishIndex]
+        .ingredients?[ingredientIndex]
+        .copyWith(amount: value);
+    await updateDish(dishItems[dishIndex]);
+    notifyListeners();
+  }
+
+  getListOfIngredients(String ingredientName) {
+    List<IngredientModel> ingredients = [];
+    for (var element in dishItems) {
+      for (var item in element.ingredients ?? []) {
+        if (item.name.toLowerCase().contains(ingredientName.toLowerCase())) {
+          ingredients.add(item);
+        }
+      }
+    }
+    return ingredients;
+  }
+
+  onDeleteIngredient(
+      IngredientModel ingredientModel, DishModel dishModel) async {
+    final dishIndex =
+        dishItems.indexWhere((element) => element.id == dishModel.id);
+    if (dishIndex == -1) return;
+    final ingredientIndex = dishItems[dishIndex]
+        .ingredients
+        ?.indexWhere((element) => element.id == ingredientModel.id);
+    if (ingredientIndex == -1) return;
+    dishItems[dishIndex].ingredients?.removeAt(ingredientIndex!);
+    await updateDish(dishItems[dishIndex]);
+    notifyListeners();
+  }
+}
+
+class TotalIngredient {
+  final String name;
+  final double amount;
+
+  TotalIngredient(this.name, this.amount);
+
+  TotalIngredient copyWith({String? name, double? amount}) {
+    return TotalIngredient(name ?? this.name, amount ?? this.amount);
   }
 }

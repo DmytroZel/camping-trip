@@ -2,6 +2,7 @@ import 'package:camp_trip/data/repository/trip_repo/trip_repo.dart';
 import 'package:camp_trip/data/repository/user_repo/user_repo.dart';
 import 'package:camp_trip/data/use_cases/trip_use_case/trip_use_case.dart';
 import 'package:camp_trip/domain/model/model/dish_model.dart';
+import 'package:camp_trip/domain/model/model/eq_model.dart';
 import 'package:camp_trip/domain/model/repository/trip_model_repo.dart';
 import 'package:injectable/injectable.dart';
 
@@ -25,9 +26,7 @@ class TripUseCaseImpl extends TripUseCase {
     final user = await userRepo.getUser(tripModel.organizer);
     await tripRepo.addOrUpdateMember(
         MemberModel(
-            role: MemberModel.admin,
-            userId: user.id,
-            userName: user.userName),
+            role: MemberModel.admin, userId: user.id, userName: user.userName),
         tripModel.id);
   }
 
@@ -41,6 +40,11 @@ class TripUseCaseImpl extends TripUseCase {
     return tripRepo
         .getTrips()
         .map((event) => event.map((e) => TripModel.fromRepo(e)).toList());
+  }
+
+  @override
+  Future<void> addOrUpdateMember(MemberModel modelRepo, String tripId) {
+    return tripRepo.addOrUpdateMember(modelRepo, tripId);
   }
 
   @override
@@ -78,5 +82,22 @@ class TripUseCaseImpl extends TripUseCase {
     trip.members.remove(member);
     await tripRepo.addOrUpdate(TripModelRepo.fromModel(trip));
     return tripRepo.deleteMember(member, trip.id);
+  }
+
+  @override
+  Future<void> addOrUpdateEqItem(EqModel eqItemModel, String tripId) {
+    return tripRepo.addOrUpdateEqItem(eqItemModel, tripId);
+  }
+
+  @override
+  Future<void> deleteEqItem(String eqItemId, String tripId) {
+    return tripRepo.deleteEqItem(eqItemId, tripId);
+  }
+
+  @override
+  Stream<List<EqModel>> getEqItems(String tripId) {
+    return tripRepo
+        .getEqItems(tripId)
+        .map((event) => event.map((e) => EqModel.fromRepo(e)).toList());
   }
 }

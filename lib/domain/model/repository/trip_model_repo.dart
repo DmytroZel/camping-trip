@@ -9,6 +9,7 @@ class TripModelRepo {
   String organizer;
   DateTime startDate;
   DateTime endDate;
+  int? totalMembers;
   List<String> members = [];
 
   TripModelRepo({
@@ -18,6 +19,7 @@ class TripModelRepo {
     required this.organizer,
     required this.members,
     required this.startDate,
+    this.totalMembers,
     required this.endDate,
   });
 
@@ -28,6 +30,7 @@ class TripModelRepo {
         organizer = r.organizer,
         members = r.members,
         startDate = r.startDate,
+        totalMembers = r.totalMembers,
         endDate = r.endDate;
 
   TripModelRepo.fromModel(TripModel r)
@@ -37,6 +40,7 @@ class TripModelRepo {
         organizer = r.organizer,
         members = r.members,
         startDate = r.startDate,
+        totalMembers = r.totalMembers,
         endDate = r.endDate;
 }
 

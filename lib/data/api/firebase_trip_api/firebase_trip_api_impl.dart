@@ -1,4 +1,5 @@
 import 'package:camp_trip/domain/model/api_model/firebase_dish_model.dart';
+import 'package:camp_trip/domain/model/api_model/firebase_eq_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:injectable/injectable.dart';
 
@@ -92,5 +93,28 @@ class FirebaseTripApiImpl extends FirebaseTripApi {
   @override
   Future<void> deleteMember(String member, String tripId) {
     return trips.doc(tripId).collection('members').doc(member).delete();
+  }
+
+  @override
+  Future<void> addOrUpdateEqItem(FirebaseEqModel eqItemModel, String tripId) {
+    return trips
+        .doc(tripId)
+        .collection('equipment')
+        .doc(eqItemModel.id)
+        .set(eqItemModel.toJson());
+  }
+
+  @override
+  Future<void> deleteEqItem(String eqItemId, String tripId) {
+    return trips.doc(tripId).collection('equipment').doc(eqItemId).delete();
+  }
+
+  @override
+  Stream<List<FirebaseEqModel>> getEqItems(String tripId) {
+    return trips.doc(tripId).collection('equipment').snapshots().map((event) =>
+        event.docs
+            .map<FirebaseEqModel>(
+                (eqItem) => FirebaseEqModel.fromJson(eqItem.data()))
+            .toList());
   }
 }

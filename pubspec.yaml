@@ -48,9 +48,12 @@ dependencies:
   uuid: ^3.0.6
   flutter_svg: ^2.0.5
   modal_bottom_sheet: 3.0.0-pre
-  cached_network_image: ^3.2.3
   image_picker: ^1.0.4
+  reactive_forms: ^16.1.1
+  loading_indicator: ^3.1.1
+  flutter_side_menu: ^0.4.0
   rive:
+
 
 
 

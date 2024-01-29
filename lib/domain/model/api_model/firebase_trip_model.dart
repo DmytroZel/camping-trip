@@ -10,6 +10,7 @@ class FirebaseTripModel {
   final DateTime startDate;
   final DateTime endDate;
   final List<String> members;
+  final int? totalMembers;
 
   FirebaseTripModel({
     required this.id,
@@ -19,6 +20,7 @@ class FirebaseTripModel {
     required this.members,
     required this.startDate,
     required this.endDate,
+    this.totalMembers,
   });
 
   FirebaseTripModel.fromModel(TripModelRepo r)
@@ -28,6 +30,7 @@ class FirebaseTripModel {
         organizer = r.organizer,
         members = r.members,
         startDate = r.startDate,
+        totalMembers = r.totalMembers,
         endDate = r.endDate;
 
   FirebaseTripModel.fromJson(Map<String, dynamic> json)
@@ -37,6 +40,7 @@ class FirebaseTripModel {
         organizer = json['organizer'],
         members = List<String>.from(json['members']),
         startDate = DateTime.parse(json['startDate']),
+        totalMembers = json['totalMembers'],
         endDate = DateTime.parse(json['endDate']);
 
   Map<String, dynamic> toJson() => {
@@ -46,6 +50,7 @@ class FirebaseTripModel {
         'organizer': organizer,
         'members': members.map((e) => e).toList(),
         'startDate': startDate.toIso8601String(),
+        'totalMembers': totalMembers,
         'endDate': endDate.toIso8601String(),
       };
 }

@@ -34,7 +34,7 @@ class IngredientApiImpl extends IngredientApi {
         .where(
           'type',
           isEqualTo: index,
-    )
+        )
         .snapshots()
         .map((event) => event.docs
             .map((e) => FirebaseIngredientModel.fromJson(e.data()))

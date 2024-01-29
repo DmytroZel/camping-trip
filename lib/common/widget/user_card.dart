@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:camp_trip/domain/model/model/user_model.dart';
 import 'package:flutter/material.dart';
 
@@ -35,8 +34,7 @@ class UserCard extends StatelessWidget {
                           color: Colors.white,
                           height: 50,
                           width: 50,
-                          child:
-                              CachedNetworkImage(imageUrl: user.image ?? ''))),
+                          child: Image.network(user.image ?? ''))),
                 if (user.image == null)
                   ClipOval(
                     child: Container(

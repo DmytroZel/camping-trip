@@ -10,7 +10,7 @@ class AddDishVM extends BaseVM {
   final DishUseCase dishUseCase;
   final TripUseCase tripUseCase;
 
-  AddDishVM(this.dishUseCase, this.tripUseCase){
+  AddDishVM(this.dishUseCase, this.tripUseCase) {
     _subForDishList();
   }
 
@@ -19,18 +19,18 @@ class AddDishVM extends BaseVM {
   DishPeriod? dishPeriod;
   DishType? dishType;
   List<DishType> dishesTypes = [
-    DishType(0, 'Soup'),
-    DishType(1, 'Dry food'),
-    DishType(2, 'Porridge'),
-    DishType(3, 'Snack'),
+    DishType(0, 'Суп'),
+    DishType(1, 'Сухий прийом'),
+    DishType(2, 'Каша'),
+    DishType(3, 'Карманка'),
   ];
 
   List<DishPeriod> dishPeriods = [
-    DishPeriod(0, 'Breakfast'),
-    DishPeriod(1, 'Lunch'),
-    DishPeriod(2, 'Dinner'),
-    DishPeriod(3, 'Snack'),
-    DishPeriod(4, 'Dessert'),
+    DishPeriod(0, 'Сніданок'),
+    DishPeriod(1, 'Обід'),
+    DishPeriod(2, 'Вечеря'),
+    DishPeriod(3, 'Перекукс'),
+    DishPeriod(4, 'Карманка'),
   ];
 
   List<DishModel> dishes = [];
@@ -61,15 +61,16 @@ class AddDishVM extends BaseVM {
     notifyListeners();
   }
 
-  addOrUpdateDish(String tripId, int day) {
-    if (dishName == null || dishPeriod == null) return;
-    final dish = DishModel(
-        id: const Uuid().v1(),
-        name: dishName!,
-        type: dishPeriod!.period,
+  addOrUpdateDish(String tripId, int day, DishModel dish) async {
+    final local = dish.copyWith(
+        name: dish.name,
+        period: dishPeriod!.period,
+        type: dishType!.type,
+        ingredients: dish.ingredients,
         day: day,
-        ingredients: []);
-    tripUseCase.addOrUpdateDishItem(dish, tripId);
+        id: const Uuid().v4());
+    await dishUseCase.addOrUpdate(dish);
+    await tripUseCase.addOrUpdateDishItem(local, tripId);
   }
 
   onNameChanged(String val) {

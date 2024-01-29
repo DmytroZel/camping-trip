@@ -8,6 +8,7 @@ import 'package:camp_trip/data/use_cases/user_use_case/user_use_case.dart';
 import 'package:camp_trip/domain/model/model/trip_model.dart';
 import 'package:camp_trip/domain/model/model/user_model.dart';
 import 'package:injectable/injectable.dart';
+import 'package:uuid/uuid.dart';
 
 @injectable
 class TripSettingsVM extends BaseVM {
@@ -28,6 +29,8 @@ class TripSettingsVM extends BaseVM {
   DateTime startDate = DateTime.now();
   DateTime endDate = DateTime.now().copyWith(day: DateTime.now().day + 1);
   StreamController<String> onLoadName = StreamController<String>.broadcast();
+  StreamController<String> onLoadTotalMembers =
+      StreamController<String>.broadcast();
 
   TripSettingsVM(this._tripUseCase, this._inviteUserUseCase, this._userUseCase,
       {@factoryParam required this.tripId}) {
@@ -64,9 +67,11 @@ class TripSettingsVM extends BaseVM {
 
   _onTripChanged(TripModel event) {
     onLoadName.add(event.name);
+    onLoadTotalMembers.add(event.totalMembers.toString());
     trip = event;
     startDate = trip?.startDate ?? DateTime.now();
-    endDate = trip?.endDate ?? DateTime.now().copyWith(day: DateTime.now().day + 1);
+    endDate =
+        trip?.endDate ?? DateTime.now().copyWith(day: DateTime.now().day + 1);
     onChangedPeriod();
     notifyListeners();
   }
@@ -78,6 +83,18 @@ class TripSettingsVM extends BaseVM {
         tripName: trip?.name ?? '',
         tripId: trip?.id ?? '',
         isRequest: false);
+    notifyListeners();
+  }
+
+  addLocalUser(String name) async {
+    showProgress();
+    final MemberModel member = MemberModel(
+        userId: Uuid().v4(), userName: name, role: MemberModel.member);
+
+    trip?.members.add(member.userId);
+    await _tripUseCase.addOrUpdateMember(member, tripId);
+    await _tripUseCase.addOrUpdate(trip!);
+    hideProgress();
     notifyListeners();
   }
 
@@ -102,6 +119,11 @@ class TripSettingsVM extends BaseVM {
 
   onChangedPeriod() {
     period = endDate.difference(startDate).inDays;
+  }
+
+  onCahangeTotalMembers(String value) {
+    trip?.totalMembers = int.parse(value);
+    notifyListeners();
   }
 
   onChangedStartDate(DateTime value) {

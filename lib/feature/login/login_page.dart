@@ -38,6 +38,10 @@ class _LoginPageState extends BaseState<LoginPage> {
 
   @override
   void initState() {
+    if (kDebugMode) {
+      _emailController.text = 'dmytrozel.work@gmail.com';
+      _passwordController.text = '12345678';
+    }
     _subForGoMain();
     _subForLoginRes();
     subForShowErrorMassage();
@@ -164,8 +168,7 @@ class _LoginPageState extends BaseState<LoginPage> {
                               controller: _emailController,
                               decoration: InputDecoration(
                                   filled: true,
-                                  fillColor:
-                                      Colors.lightBlue.withOpacity(0.8),
+                                  fillColor: Colors.lightBlue.withOpacity(0.8),
                                   disabledBorder: const OutlineInputBorder(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(10)),
@@ -239,8 +242,7 @@ class _LoginPageState extends BaseState<LoginPage> {
                               onTap: handsOnTheEyes,
                               decoration: InputDecoration(
                                   filled: true,
-                                  fillColor:
-                                      Colors.lightBlue.withOpacity(0.8),
+                                  fillColor: Colors.lightBlue.withOpacity(0.8),
                                   disabledBorder: const OutlineInputBorder(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(10)),
@@ -389,6 +391,8 @@ class _LoginPageState extends BaseState<LoginPage> {
 
   _subForGoMain() {
     final vm = Provider.of<LoginVm>(context, listen: false);
+    vm.onEmailChanged(_emailController.text);
+    vm.onPasswordChanged(_passwordController.text);
     vm.goToMain.stream.listen((event) {
       _goMain();
     }).toBag(bag);
@@ -406,7 +410,7 @@ class _LoginPageState extends BaseState<LoginPage> {
   }
 
   _goMain() {
-    context.replace(ScreenNames.initial);
+    context.go(ScreenNames.initial);
   }
 
   _subForShowRegisterMassage() {

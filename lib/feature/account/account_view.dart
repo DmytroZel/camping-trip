@@ -139,16 +139,16 @@ class _AccountViewState extends BaseState<AccountView> {
         Row(
           children: [
             Icon(
-              Icons.male,
-              color: vm.getGender() ? Colors.blue : Colors.grey,
+              Icons.female,
+              color: vm.getGender() ? Colors.grey : Colors.blue,
             ),
             Switch(
               onChanged: vm.onGenderChanged,
               value: vm.getGender(),
             ),
             Icon(
-              Icons.female,
-              color: vm.getGender() ? Colors.grey : Colors.blue,
+              Icons.male,
+              color: vm.getGender() ? Colors.blue : Colors.grey,
             ),
           ],
         ),

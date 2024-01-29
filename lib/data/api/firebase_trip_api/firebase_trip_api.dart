@@ -1,5 +1,6 @@
 import 'package:camp_trip/domain/model/api_model/firebase_dish_model.dart';
 
+import '../../../domain/model/api_model/firebase_eq_model.dart';
 import '../../../domain/model/api_model/firebase_trip_model.dart';
 
 abstract class FirebaseTripApi {
@@ -15,4 +16,9 @@ abstract class FirebaseTripApi {
   Future<void> addOrUpdateDishItem(
       FirebaseDishModel dishItemModel, String tripId);
   Future<void> deleteMember(String member, String tripId);
+
+  //Equipment
+  Stream<List<FirebaseEqModel>> getEqItems(String tripId);
+  Future<void> deleteEqItem(String eqItemId, String tripId);
+  Future<void> addOrUpdateEqItem(FirebaseEqModel eqItemModel, String tripId);
 }

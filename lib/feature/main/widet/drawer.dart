@@ -36,7 +36,7 @@ class LeftMenuDrawer extends StatelessWidget {
             onPressed: () {
               context.push(ScreenNames.createTrip);
             },
-            child: Text("create trip"),
+            child: Text("Створити похід"),
             color: Colors.lightGreen.withAlpha(400),
           ),
           MaterialButton(
